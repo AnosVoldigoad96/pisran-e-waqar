@@ -25,23 +25,23 @@ type ContactInfo = {
 };
 
 type PageSeoData = {
-    meta_title: string | null;
-    meta_description: string | null;
-    meta_keywords: string | null;
+    seo_title: string | null;
+    seo_description: string | null;
+    seo_tags: string | null;
 };
 
 export async function generateMetadata(): Promise<Metadata> {
     const { data, error } = await supabase
         .from('page_seo_data')
-        .select('meta_title, meta_description, meta_keywords')
-        .eq('slug', 'packages')
+        .select('seo_title, seo_description, seo_tags')
+        .eq('page_slug', 'packages')
         .single<PageSeoData>();
 
     if (error || !data) {
         return {};
     }
 
-    return { title: data.meta_title, description: data.meta_description, keywords: data.meta_keywords };
+    return { title: data.seo_title, description: data.seo_description, keywords: data.seo_tags };
 };
 
 async function getPageData() {

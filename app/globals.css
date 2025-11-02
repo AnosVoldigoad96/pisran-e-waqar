@@ -120,3 +120,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .animate-zoom-pan {
+    animation: zoom-pan 20s ease-in-out infinite alternate;
+  }
+
+  @keyframes zoom-pan {
+    0% { transform: scale(1) translateX(0); }
+    100% { transform: scale(1.15) translateX(-2%); }
+  }
+}

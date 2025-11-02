@@ -2,10 +2,12 @@ import Link from "next/link";
 import { Facebook, Instagram, Twitter, Youtube, ShieldCheck, BadgePercent, Users, Rocket, Phone, Mail, MessageCircle, ChevronRight, Link2, Headset, MapPin, Clock, Send, Mail as MailIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 // Define the structure of our site settings data
 type SiteSettings = {
     brand_name: string | null;
+    site_logo_url: string | null;
     social_links: { [key: string]: string } | null;
     address: string | null;
     contact_no: string | null;
@@ -65,7 +67,17 @@ export function Footer({ settings }: FooterProps) {
                 <div className="grid grid-cols-1 gap-8 border-t border-primary-foreground/20 py-12 md:grid-cols-4">
                     {/* Column 1: Company Info */}
                     <div>
-                        <h3 className="font-bold text-lg">{settings?.brand_name || "Pisran-e-Waqar"}</h3>
+                        <Link href="/" className="flex items-start mb-4">
+                            {settings?.site_logo_url ? (
+                                <Image
+                                    src={settings.site_logo_url}
+                                    alt={settings.brand_name || "Pisran-e-Waqar"}
+                                    width={250}
+                                    height={100}
+                                    className="object-contain"
+                                />
+                            ) : <h3 className="font-bold text-lg">{settings?.brand_name || "Pisran-e-Waqar"}</h3>}
+                        </Link>
                         <p className="text-sm italic text-primary-foreground/70 mt-1">Your trusted partner for Umrah.</p>
                         <p className="text-sm text-primary-foreground/80 mt-4">Dedicated to providing memorable and sacred journeys. We handle every detail of your pilgrimage with care, ensuring a seamless and spiritually fulfilling experience.</p>
                     </div>

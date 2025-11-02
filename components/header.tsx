@@ -39,18 +39,16 @@ export function Header({ settings }: HeaderProps) {
             <div className="flex h-16 items-center justify-between px-4 sm:px-8 lg:px-32">
                 {/* Left side: Logo and Brand Name */}
                 <div>
-                    <Link href="/" className="flex items-center space-x-2">
+                    <Link href="/" className="flex items-center">
                         {settings?.site_logo_url ? (
                             <Image
                                 src={settings.site_logo_url}
                                 alt={settings.brand_name || "Pisran-e-Waqar"}
-                                width={40}
-                                height={40}
+                                width={250}
+                                height={100}
+                                className="object-contain"
                             />
                         ) : null}
-                        <span className="hidden font-bold sm:inline-block">
-                            {settings?.brand_name || "Pisran-e-Waqar"}
-                        </span>
                     </Link>
                 </div>
 
