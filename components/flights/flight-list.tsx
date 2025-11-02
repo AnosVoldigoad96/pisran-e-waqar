@@ -1,14 +1,16 @@
 "use client";
 
-import { Plane, PlaneLanding, PlaneTakeoff, ArrowRightLeft } from "lucide-react";
+import { Plane, PlaneLanding, PlaneTakeoff, ArrowRightLeft, ChevronsLeftRight } from "lucide-react";
 import { Button } from "../ui/button";
 import { WhatsAppIcon } from "../icons/whatsapp-icon";
 import Image from "next/image";
 import {
     Carousel,
     CarouselContent,
-    CarouselItem
-} from "@/components/ui/carousel"; 
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
 
 
 type Flight = {
@@ -40,18 +42,6 @@ export function FlightList({ flights, contactInfo }: { flights: Flight[], contac
 
     return (
         <div className="bg-background">
-            <div className="bg-secondary py-16">
-                <div className="container px-4 sm:px-8 lg:px-32">
-                    <div className="mx-auto max-w-2xl text-center">
-                        <h1 className="text-3xl font-bold tracking-tight text-secondary-foreground sm:text-4xl">
-                            Book Your Flights
-                        </h1>
-                        <p className="mt-2 text-lg leading-8 text-secondary-foreground/80">
-                            Find the best deals on flights to Makkah, Madinah, and beyond.
-                        </p>
-                    </div>
-                </div>
-            </div>
             <div className="container px-4 sm:px-8 lg:px-32 py-16">
                 {flights.length === 0 ? (
                     <div className="text-center py-20">
@@ -63,30 +53,8 @@ export function FlightList({ flights, contactInfo }: { flights: Flight[], contac
                     </div>
                 ) : (
                     <div className="space-y-16">
-                        {oneWayFlights.length > 0 && (
-                            <section>
-                                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-8">
-                                    One-way Flights
-                                </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {oneWayFlights.map((flight) => (
-                                        <FlightCard key={flight.id} flight={flight} contactInfo={contactInfo} />
-                                    ))}
-                                </div>
-                            </section>
-                        )}
-                        {roundTripFlights.length > 0 && (
-                            <section>
-                                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-8">
-                                    Round-trip Flights
-                                </h2>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                    {roundTripFlights.map((flight) => (
-                                        <FlightCard key={flight.id} flight={flight} contactInfo={contactInfo} />
-                                    ))}
-                                </div>
-                            </section>
-                        )}
+                        <FlightSection title="One-way Flights" flights={oneWayFlights} contactInfo={contactInfo} />
+                        <FlightSection title="Round-trip Flights" flights={roundTripFlights} contactInfo={contactInfo} />
                     </div>
                 )}
             </div>
@@ -94,7 +62,47 @@ export function FlightList({ flights, contactInfo }: { flights: Flight[], contac
     );
 }
 
-function FlightCard({ flight, contactInfo }: { flight: Flight, contactInfo: ContactInfo | null }) {
+function FlightSection({ title, flights, contactInfo }: { title: string, flights: Flight[], contactInfo: ContactInfo | null }) {
+    if (flights.length === 0) return null;
+
+    return (
+        <section>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-8">{title}</h2>
+
+            {/* --- Mobile Carousel View --- */}
+            <div className="sm:hidden">
+                <Carousel
+                    opts={{ align: "start", loop: flights.length > 1 }}
+                    className="w-full"
+                >
+                    <CarouselContent className="-ml-4">
+                        {flights.map((flight) => (
+                            <CarouselItem key={flight.id} className="pl-4 basis-4/5">
+                                <div className="p-1 h-full">
+                                    <FlightCard flight={flight} contactInfo={contactInfo} />
+                                </div>
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <div className="flex justify-center gap-2 pt-4">
+                        <CarouselPrevious className="static translate-x-0 translate-y-0" />
+                        <CarouselNext className="static translate-x-0 translate-y-0" />
+                    </div>
+                    <div className="mt-4 flex items-center justify-center text-sm text-muted-foreground">
+                        <ChevronsLeftRight className="mr-2 h-4 w-4" />
+                        <span>Swipe for more</span>
+                    </div>
+                </Carousel>
+            </div>
+
+            {/* --- Desktop Grid View --- */}
+            <div className="hidden sm:grid grid-cols-2 lg:grid-cols-3 gap-8">
+                {flights.map((flight) => <FlightCard key={flight.id} flight={flight} contactInfo={contactInfo} />)}
+            </div>
+        </section>
+    );
+}
+export function FlightCard({ flight, contactInfo }: { flight: Flight, contactInfo: ContactInfo | null }) {
     const whatsappLink = `https://wa.me/${contactInfo?.whatsapp_no}`;
     const formatTime = (dateString: string | null) => {
         if (!dateString) return 'N/A';
@@ -108,7 +116,7 @@ function FlightCard({ flight, contactInfo }: { flight: Flight, contactInfo: Cont
     const isRoundTrip = !!flight.return_departure_time;
 
     return (
-        <div className="rounded-lg border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+        <div className="h-full flex flex-col rounded-lg border bg-card text-card-foreground shadow-sm transition-all duration-300 sm:hover:shadow-md sm:hover:-translate-y-1">
             <div className="p-6">
                 <div className="flex items-start justify-between gap-4 mb-4">
                     <div className="flex items-center gap-4">
@@ -145,7 +153,7 @@ function FlightCard({ flight, contactInfo }: { flight: Flight, contactInfo: Cont
                     </div>
                 </div>
                 {flight.return_departure_time && (
-                    <>
+                    <div className="flex-grow">
                         <div className="flex items-center justify-center my-4">
                             <div className="flex-grow border-t border-dashed"></div>
                             <ArrowRightLeft className="h-4 w-4 text-muted-foreground mx-2" />
@@ -162,10 +170,10 @@ function FlightCard({ flight, contactInfo }: { flight: Flight, contactInfo: Cont
                                 <p className="text-muted-foreground flex items-center justify-center gap-1"><PlaneLanding className="h-4 w-4" /> {formatTime(flight.return_arrival_time)}</p>
                             </div>
                         </div>
-                    </>
+                    </div>
                 )}
                 {flight.price && (
-                    <div className="mt-4 pt-4 border-t flex justify-between items-center">
+                    <div className="mt-auto pt-4 border-t flex justify-between items-center">
                         {contactInfo?.whatsapp_no && (
                             <Button size="sm" asChild className="bg-green-500 hover:bg-green-600 text-white">
                                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer">

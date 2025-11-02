@@ -11,6 +11,12 @@ type AboutContent = {
     moto: string | null;
 };
 
+type PageSeoData = {
+    seo_title: string | null;
+    seo_description: string | null;
+    seo_tags: string | null;
+};
+
 async function getAboutContent(): Promise<AboutContent | null> {
     const { data, error } = await supabase
         .from('about_us_content')
@@ -46,10 +52,22 @@ async function getTeamMembers(): Promise<TeamMember[]> {
     return data.map(member => ({ id: member.id, name: member.name, role: member.position, imageUrl: member.image_url })) || [];
 }
 
-export const metadata: Metadata = {
-    title: "About Us",
-    description: "Learn more about Pisran-e-Waqar, our mission, and the dedicated team behind our success in providing exceptional Umrah services.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+    const { data, error } = await supabase
+        .from('page_seo_data')
+        .select('seo_title, seo_description, seo_tags')
+        .eq('page_slug', 'about-us')
+        .single<PageSeoData>();
+
+    if (error || !data) {
+        return {
+            title: "About Us",
+            description: "Learn more about Pisran-e-Waqar, our mission, and the dedicated team behind our success in providing exceptional Umrah services.",
+        };
+    }
+
+    return { title: data.seo_title, description: data.seo_description, keywords: data.seo_tags };
+}
 
 export default async function AboutUsPage() {
     const aboutContent = await getAboutContent();

@@ -4,16 +4,18 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { Menu } from "lucide-react";
+import { Menu, Phone } from "lucide-react";
 import { NavigationLinks } from "./navigation-links";
 import { WhatsAppButton } from "./whatsapp-button";
 import { WhatsAppIcon } from "./icons/whatsapp-icon";
+import { CallButton } from "./call-button";
 
 // Define the structure of our site settings data
 type SiteSettings = {
     site_logo_url: string | null;
     brand_name: string | null;
     whatsapp_no: string | null;
+    contact_no: string | null;
 };
 
 // Define the props for our Header component
@@ -33,6 +35,7 @@ const navLinks = [
 export function Header({ settings }: HeaderProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const whatsappLink = `https://wa.me/${settings?.whatsapp_no}`;
+    const callLink = `tel:${settings?.contact_no}`;
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-primary-foreground/20 bg-primary text-primary-foreground">
@@ -46,7 +49,7 @@ export function Header({ settings }: HeaderProps) {
                                 alt={settings.brand_name || "Pisran-e-Waqar"}
                                 width={250}
                                 height={100}
-                                className="object-contain"
+                                className="h-auto w-[156px] object-contain sm:w-[312px]"
                             />
                         ) : null}
                     </Link>
@@ -58,7 +61,7 @@ export function Header({ settings }: HeaderProps) {
                 </div>
 
                 {/* Right side: Icons */}
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-1 sm:space-x-2">
                     {/* Mobile WhatsApp Icon with Pulse */}
                     <div className="md:hidden">
                         {settings?.whatsapp_no && (
@@ -66,10 +69,18 @@ export function Header({ settings }: HeaderProps) {
                                 <WhatsAppIcon className="h-6 w-6 text-green-500" />
                             </a>
                         )}
+                        {settings?.contact_no && (
+                            <a href={callLink} className="inline-flex h-10 w-10 items-center justify-center rounded-md">
+                                <Phone className="h-5 w-5 text-secondary" />
+                            </a>
+                        )}
                     </div>
 
                     {/* Desktop WhatsApp Button */}
                     <div className="hidden md:block">
+                        {settings?.contact_no && (
+                            <CallButton href={callLink} />
+                        )}
                         {settings?.whatsapp_no && (
                             <WhatsAppButton href={whatsappLink} />
                         )}

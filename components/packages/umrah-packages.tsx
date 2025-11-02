@@ -211,7 +211,7 @@ export function UmrahPackages({ packages, contactInfo }: { packages: Package[], 
                                             ))}
                                         </div>
                                     )}
-                                    <div className="pt-2 px-[35%]">
+                                    <div className="pt-2 px-[25%]">
                                         {contactInfo?.whatsapp_no && (
                                             <Button className="w-full bg-green-500 hover:bg-green-600" asChild>
                                                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="flex h-9 items-center justify-center px-3">

@@ -5,6 +5,7 @@ import { UmrahPackages } from "@/components/packages/umrah-packages";
 import { CustomPackageForm } from "@/components/packages/custom-package-form";
 import { DisclaimerSection } from "@/components/packages/disclaimer-section";
 import { supabase } from "@/lib/supabase";
+import { CtaSection } from "@/components/home/cta-section";
 
 export const dynamic = 'force-dynamic';
 
@@ -24,6 +25,7 @@ type Package = {
 
 type ContactInfo = {
     whatsapp_no: string | null;
+    contact_no: string | null;
 };
 
 type PageSeoData = {
@@ -48,7 +50,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 async function getPageData() {
     const packagesPromise = supabase.from('packages').select('*').order('package_name', { ascending: true });
-    const contactInfoPromise = supabase.from('site_settings').select('whatsapp_no').eq('singleton_guard', true).single();
+    const contactInfoPromise = supabase.from('site_settings').select('whatsapp_no, contact_no').eq('singleton_guard', true).single();
 
     const [{ data: packages, error: packagesError }, { data: contactInfo, error: contactInfoError }] = await Promise.all([packagesPromise, contactInfoPromise]);
 
@@ -70,6 +72,7 @@ export default async function PackagesPage() {
             <FlightItineraries />
             <UmrahPackages packages={packages} contactInfo={contactInfo} />
             <CustomPackageForm />
+            <CtaSection contactInfo={contactInfo} />
             <DisclaimerSection />
             {/* We will add more sections to this page later */}
         </div>

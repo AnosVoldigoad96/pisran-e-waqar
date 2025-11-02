@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Send } from "lucide-react";
 import { DatePicker } from "../ui/date-picker";
+import Image from "next/image";
 
 export function FlightInquiryForm() {
     const [departureCity, setDepartureCity] = useState("");
@@ -68,60 +69,70 @@ export function FlightInquiryForm() {
     };
 
     return (
-        <div className="bg-[#fff6f6] text-foreground rounded-lg">
-            <div className="container px-4 sm:px-8 lg:px-16 py-16 text-center">
-                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Can't Find Your Flight?</h2>
-                <p className="mt-4 text-lg max-w-2xl mx-auto text-muted-foreground">
-                    Fill out the form below and our travel experts will find the best deals for you.
+        <div className="relative text-white overflow-hidden">
+            <Image
+                src="https://lvylckenosoiinbragac.supabase.co/storage/v1/object/public/site-images/public/flights_herov2.jpeg"
+                alt="Airplane wing in the sky"
+                fill
+                style={{ objectFit: 'cover' }}
+                className="z-0 animate-zoom-pan"
+            />
+            <div className="absolute inset-0 bg-black/50 z-10" />
+            <div className="absolute inset-0 bg-secondary/30 z-10" />
+
+            <div className="relative z-20 container px-4 sm:px-8 lg:px-16 py-16 sm:py-24 text-center">
+                <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Find Your Perfect Flight</h1>
+                <p className="mt-4 text-lg max-w-2xl mx-auto text-white/80">
+                    Enter your travel details below and let our experts find the best deals for you.
                 </p>
 
                 <form onSubmit={handleSubmit} className="mt-10 max-w-4xl mx-auto text-left space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <Label htmlFor="departure-city">Departure City</Label>
-                            <Input id="departure-city" value={departureCity} onChange={(e) => setDepartureCity(e.target.value)} placeholder="e.g., Lahore" required />
+                            <Label htmlFor="departure-city" className="text-white/90">Departure City</Label>
+                            <Input id="departure-city" value={departureCity} onChange={(e) => setDepartureCity(e.target.value)} placeholder="e.g., Lahore" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="arrival-city">Arrival City</Label>
-                            <Input id="arrival-city" value={arrivalCity} onChange={(e) => setArrivalCity(e.target.value)} placeholder="e.g., Jeddah" required />
+                            <Label htmlFor="arrival-city" className="text-white/90">Arrival City</Label>
+                            <Input id="arrival-city" value={arrivalCity} onChange={(e) => setArrivalCity(e.target.value)} placeholder="e.g., Jeddah" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="departure-date">Departure Date</Label>
-                            <DatePicker date={departureDate} setDate={setDepartureDate} />
+                            <Label htmlFor="departure-date" className="text-white/90">Departure Date</Label>
+                            <DatePicker date={departureDate} setDate={setDepartureDate} className="bg-white/95 text-foreground" />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="return-date">Return Date (Optional)</Label>
-                            <DatePicker date={returnDate} setDate={setReturnDate} />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        <div className="space-y-2">
-                            <Label htmlFor="adults">Adults</Label>
-                            <Input id="adults" type="number" value={adults} onChange={(e) => setAdults(parseInt(e.target.value))} min={1} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="children">Children</Label>
-                            <Input id="children" type="number" value={children} onChange={(e) => setChildren(parseInt(e.target.value))} min={0} />
-                        </div>
-                        <div className="space-y-2">
-                            <Label htmlFor="infants">Infants</Label>
-                            <Input id="infants" type="number" value={infants} onChange={(e) => setInfants(parseInt(e.target.value))} min={0} />
+                            <Label htmlFor="return-date" className="text-white/90">Return Date (Optional)</Label>
+                            <DatePicker date={returnDate} setDate={setReturnDate} className="bg-white/95 text-foreground" />
                         </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         <div className="space-y-2">
-                            <Label htmlFor="contact-name">Full Name</Label>
-                            <Input id="contact-name" value={contactName} onChange={(e) => setContactName(e.target.value)} placeholder="Your Name" required />
+                            <Label htmlFor="adults" className="text-white/90">Adults</Label>
+                            <Input id="adults" type="number" value={adults} onChange={(e) => setAdults(parseInt(e.target.value))} min={1} className="bg-white/95 text-foreground" />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="contact-phone">Phone Number</Label>
-                            <Input id="contact-phone" type="tel" value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} placeholder="0300-1234567" required />
+                            <Label htmlFor="children" className="text-white/90">Children</Label>
+                            <Input id="children" type="number" value={children} onChange={(e) => setChildren(parseInt(e.target.value))} min={0} className="bg-white/95 text-foreground" />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="contact-email">Email (Optional)</Label>
-                            <Input id="contact-email" type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder="you@example.com" />
+                            <Label htmlFor="infants" className="text-white/90">Infants</Label>
+                            <Input id="infants" type="number" value={infants} onChange={(e) => setInfants(parseInt(e.target.value))} min={0} className="bg-white/95 text-foreground" />
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div className="space-y-2">
+                            <Label htmlFor="contact-name" className="text-white/90">Full Name</Label>
+                            <Input id="contact-name" value={contactName} onChange={(e) => setContactName(e.target.value)} placeholder="Your Name" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="contact-phone" className="text-white/90">Phone Number</Label>
+                            <Input id="contact-phone" type="tel" value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} placeholder="0300-1234567" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="contact-email" className="text-white/90">Email (Optional)</Label>
+                            <Input id="contact-email" type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder="you@example.com" className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
                         </div>
                     </div>
 

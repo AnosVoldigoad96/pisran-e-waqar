@@ -35,15 +35,24 @@ export function HotelList({ hotels, contactInfo }: { hotels: Hotel[], contactInf
 
     return (
         <div className="bg-background">
-            <div className="bg-secondary py-16">
-                <div className="container px-4 sm:px-8 lg:px-32">
+            <div className="relative py-24 sm:py-32 text-white overflow-hidden">
+                <Image
+                    src="https://lvylckenosoiinbragac.supabase.co/storage/v1/object/public/site-images/public/hotels_herov2.jpeg"
+                    alt="Grand Mosque"
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    className="z-0 animate-zoom-pan"
+                />
+                <div className="absolute inset-0 bg-black/40 z-10" />
+                <div className="absolute inset-0 bg-secondary/30 z-10" />
+                <div className="relative z-20 container px-4 sm:px-8 lg:px-32">
                     <div className="mx-auto max-w-2xl text-center">
-                    <h1 className="text-3xl font-bold tracking-tight text-secondary-foreground sm:text-4xl">
-                        Our Partner Hotels
-                    </h1>
-                    <p className="mt-2 text-lg leading-8 text-secondary-foreground/80">
-                        We partner with the best hotels in Makkah and Madinah to ensure a comfortable stay.
-                    </p>
+                        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                            Our Partner Hotels
+                        </h1>
+                        <p className="mt-2 text-lg leading-8 text-white/80">
+                            We partner with the best hotels in Makkah and Madinah to ensure a comfortable stay.
+                        </p>
                     </div>
                 </div>
             </div>

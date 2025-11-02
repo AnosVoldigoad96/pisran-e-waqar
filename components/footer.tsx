@@ -41,6 +41,7 @@ const quickLinks = [
     { href: "/flights", label: "Flights" },
     { href: "/about-us", label: "About Us" },
     { href: "/contact-us", label: "Contact Us" },
+    { href: "/faq", label: "FAQs" },
 ];
 
 export function Footer({ settings }: FooterProps) {
@@ -150,8 +151,8 @@ export function Footer({ settings }: FooterProps) {
                         <p className="mt-1">Registered in Pakistan. License No# LHR11414.</p>
                     </div>
                     <div className="flex justify-center space-x-6 md:justify-end">
-                        <Link href="/privacy-policy" className="text-primary-foreground/80 hover:text-primary-foreground hover:underline">Privacy Policy</Link>
-                        <Link href="/terms-and-conditions" className="text-primary-foreground/80 hover:text-primary-foreground hover:underline">Terms & Conditions</Link>
+                        <Link href="/privacy" className="text-primary-foreground/80 hover:text-primary-foreground hover:underline">Privacy Policy</Link>
+                        <Link href="/terms" className="text-primary-foreground/80 hover:text-primary-foreground hover:underline">Terms & Conditions</Link>
                     </div>
                 </div>
 

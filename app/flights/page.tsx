@@ -78,8 +78,8 @@ export default async function FlightsPage() {
     const contactInfo = await getContactInfo();
     return (
         <>
-            <FlightList flights={flights} contactInfo={contactInfo} />
             <FlightInquiryForm />
+            <FlightList flights={flights} contactInfo={contactInfo} />
             <FlightCTA contactInfo={contactInfo} />
         </>
     );
