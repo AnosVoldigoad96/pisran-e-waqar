@@ -4,6 +4,8 @@ import { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
 import { OurValues } from "@/components/about/our-values";
 
+export const dynamic = 'force-dynamic';
+
 type AboutContent = {
     intro: string | null;
     moto: string | null;

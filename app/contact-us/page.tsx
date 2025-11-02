@@ -7,6 +7,8 @@ import { MapLocation } from "@/components/contact-us/map-location";
 import { FollowUsCard } from "@/components/contact-us/follow-us-card";
 import { BusinessHoursCard } from "@/components/contact-us/business-hours-card";
 
+export const dynamic = 'force-dynamic';
+
 type PageSeoData = {
     seo_title: string | null;
     seo_description: string | null;

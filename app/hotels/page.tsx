@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { supabase } from "@/lib/supabase";
 import { HotelList } from "@/components/hotels/hotel-list";
 
+export const dynamic = 'force-dynamic';
+
 type Hotel = {
     id: number;
     name: string;

@@ -4,6 +4,8 @@ import { FlightList } from "@/components/flights/flight-list";
 import { FlightInquiryForm } from "@/components/flights/flight-inquiry-form";
 import { FlightCTA } from "@/components/flights/flight-cta";
 
+export const dynamic = 'force-dynamic';
+
 type Flight = {
     id: number;
     flight_number: string;

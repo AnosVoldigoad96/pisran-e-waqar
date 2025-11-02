@@ -6,6 +6,8 @@ import { CustomPackageForm } from "@/components/packages/custom-package-form";
 import { DisclaimerSection } from "@/components/packages/disclaimer-section";
 import { supabase } from "@/lib/supabase";
 
+export const dynamic = 'force-dynamic';
+
 type Package = {
     id: number;
     package_name: string;
