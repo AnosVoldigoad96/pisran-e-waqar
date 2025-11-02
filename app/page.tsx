@@ -2,6 +2,8 @@ import { Hero } from "@/components/home/hero";
 import { supabase } from "@/lib/supabase";
 import { Metadata } from "next";
 
+export const dynamic = 'force-dynamic';
+
 type PageSeoData = {
     seo_title: string | null;
     seo_description: string | null;
