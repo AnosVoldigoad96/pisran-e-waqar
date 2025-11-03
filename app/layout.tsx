@@ -5,6 +5,7 @@ import { supabase } from "@/lib/supabase";
 import { Header } from "@/components/header";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/footer";
+import RecaptchaProvider from "./components/recaptcha-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,13 +43,15 @@ export default async function RootLayout({
     <html lang="en">
       {/* The body will have the background color for the sides */}
       <body className={`${inter.className} bg-background`}>
-        {/* This container div centers everything inside it */}
-        <div className="relative flex min-h-screen flex-col">
-          <Header settings={settings} />
-          <main className="flex-1">{children}</main>
-          <Footer settings={settings} />
-          <Toaster />
-        </div>
+        <RecaptchaProvider>
+          {/* This container div centers everything inside it */}
+          <div className="relative flex min-h-screen flex-col">
+            <Header settings={settings} />
+            <main className="flex-1">{children}</main>
+            <Footer settings={settings} />
+            <Toaster />
+          </div>
+        </RecaptchaProvider>
       </body>
     </html>
   );

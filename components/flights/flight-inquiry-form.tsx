@@ -1,70 +1,68 @@
 "use client";
 
-import { useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { useActionState, useEffect, useRef, useTransition } from "react";
+import { useFormStatus } from "react-dom";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { submitFlightInquiry } from "@/app/actions";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Send } from "lucide-react";
-import { DatePicker } from "../ui/date-picker";
+import { DatePickerWithInput } from "@/components/ui/date-picker";
 import Image from "next/image";
 
-export function FlightInquiryForm() {
-    const [departureCity, setDepartureCity] = useState("");
-    const [arrivalCity, setArrivalCity] = useState("");
-    const [departureDate, setDepartureDate] = useState<Date | undefined>();
-    const [returnDate, setReturnDate] = useState<Date | undefined>();
-    const [adults, setAdults] = useState(1);
-    const [children, setChildren] = useState(0);
-    const [infants, setInfants] = useState(0);
-    const [contactName, setContactName] = useState("");
-    const [contactPhone, setContactPhone] = useState("");
-    const [contactEmail, setContactEmail] = useState("");
-    const [isSubmitting, setIsSubmitting] = useState(false);
+const initialState = {
+    success: false,
+    message: "",
+};
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (!departureCity || !arrivalCity || !departureDate || !contactName || !contactPhone) {
-            toast.error("Please fill in all required fields.");
+function SubmitButton({ isPending }: { isPending: boolean }) {
+    const { pending } = useFormStatus();
+    const disabled = pending || isPending;
+    return (
+        <Button type="submit" size="lg" disabled={disabled} className="w-full sm:w-auto shadow-lg bg-gradient-to-r from-primary to-primary/80 text-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
+            <Send className="mr-2 h-5 w-5" />
+            {disabled ? "Submitting..." : "Submit Inquiry"}
+        </Button>
+    );
+}
+
+export function FlightInquiryForm() {
+    const [state, formAction] = useActionState(submitFlightInquiry, initialState);
+    const [isPending, startTransition] = useTransition();
+    const formRef = useRef<HTMLFormElement>(null);
+    const { executeRecaptcha } = useGoogleReCaptcha();
+
+    useEffect(() => {
+        if (state.message) {
+            if (state.success) {
+                toast.success("Inquiry submitted successfully!", {
+                    description: "Our team will get back to you shortly with the best flight options.",
+                });
+                formRef.current?.reset();
+            } else {
+                toast.error("Submission failed. Please try again.", {
+                    description: state.message,
+                });
+            }
+        }
+    }, [state]);
+
+    const handleFormSubmit = async (formData: FormData) => {
+        if (!executeRecaptcha) {
+            toast.error("reCAPTCHA not ready. Please try again.");
             return;
         }
-        setIsSubmitting(true);
 
-        const { error } = await supabase.from("flight_inquiries").insert({
-            departure_city: departureCity,
-            arrival_city: arrivalCity,
-            departure_date: departureDate,
-            return_date: returnDate,
-            adults,
-            children,
-            infants,
-            contact_name: contactName,
-            contact_phone: contactPhone,
-            contact_email: contactEmail,
-        });
-
-        setIsSubmitting(false);
-
-        if (error) {
-            toast.error("Submission failed. Please try again.", {
-                description: error.message,
+        try {
+            const token = await executeRecaptcha("flight_inquiry_form");
+            formData.set("g-recaptcha-response", token);
+            startTransition(() => {
+                formAction(formData);
             });
-        } else {
-            toast.success("Inquiry submitted successfully!", {
-                description: "Our team will get back to you shortly with the best flight options.",
-            });
-            // Reset form
-            setDepartureCity("");
-            setArrivalCity("");
-            setDepartureDate(undefined);
-            setReturnDate(undefined);
-            setAdults(1);
-            setChildren(0);
-            setInfants(0);
-            setContactName("");
-            setContactPhone("");
-            setContactEmail("");
+        } catch (error) {
+            toast.error("An error occurred while generating reCAPTCHA token.");
         }
     };
 
@@ -86,61 +84,58 @@ export function FlightInquiryForm() {
                     Enter your travel details below and let our experts find the best deals for you.
                 </p>
 
-                <form onSubmit={handleSubmit} className="mt-10 max-w-4xl mx-auto text-left space-y-6">
+                <form ref={formRef} action={handleFormSubmit} className="mt-10 max-w-4xl mx-auto text-left space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <Label htmlFor="departure-city" className="text-white/90">Departure City</Label>
-                            <Input id="departure-city" value={departureCity} onChange={(e) => setDepartureCity(e.target.value)} placeholder="e.g., Lahore" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
+                            <Input id="departure-city" name="departure_city" placeholder="e.g., Lahore" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="arrival-city" className="text-white/90">Arrival City</Label>
-                            <Input id="arrival-city" value={arrivalCity} onChange={(e) => setArrivalCity(e.target.value)} placeholder="e.g., Jeddah" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
+                            <Input id="arrival-city" name="arrival_city" placeholder="e.g., Jeddah" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="departure-date" className="text-white/90">Departure Date</Label>
-                            <DatePicker date={departureDate} setDate={setDepartureDate} className="bg-white/95 text-foreground" />
+                            <DatePickerWithInput name="departure_date" className="bg-white/95 text-foreground" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="return-date" className="text-white/90">Return Date (Optional)</Label>
-                            <DatePicker date={returnDate} setDate={setReturnDate} className="bg-white/95 text-foreground" />
+                            <DatePickerWithInput name="return_date" className="bg-white/95 text-foreground" />
                         </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         <div className="space-y-2">
                             <Label htmlFor="adults" className="text-white/90">Adults</Label>
-                            <Input id="adults" type="number" value={adults} onChange={(e) => setAdults(parseInt(e.target.value))} min={1} className="bg-white/95 text-foreground" />
+                            <Input id="adults" name="adults" type="number" defaultValue={1} min={1} className="bg-white/95 text-foreground" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="children" className="text-white/90">Children</Label>
-                            <Input id="children" type="number" value={children} onChange={(e) => setChildren(parseInt(e.target.value))} min={0} className="bg-white/95 text-foreground" />
+                            <Input id="children" name="children" type="number" defaultValue={0} min={0} className="bg-white/95 text-foreground" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="infants" className="text-white/90">Infants</Label>
-                            <Input id="infants" type="number" value={infants} onChange={(e) => setInfants(parseInt(e.target.value))} min={0} className="bg-white/95 text-foreground" />
+                            <Input id="infants" name="infants" type="number" defaultValue={0} min={0} className="bg-white/95 text-foreground" />
                         </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                         <div className="space-y-2">
                             <Label htmlFor="contact-name" className="text-white/90">Full Name</Label>
-                            <Input id="contact-name" value={contactName} onChange={(e) => setContactName(e.target.value)} placeholder="Your Name" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
+                            <Input id="contact-name" name="contact_name" placeholder="Your Name" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="contact-phone" className="text-white/90">Phone Number</Label>
-                            <Input id="contact-phone" type="tel" value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} placeholder="0300-1234567" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
+                            <Input id="contact-phone" name="contact_phone" type="tel" placeholder="0300-1234567" required className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="contact-email" className="text-white/90">Email (Optional)</Label>
-                            <Input id="contact-email" type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder="you@example.com" className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
+                            <Input id="contact-email" name="contact_email" type="email" placeholder="you@example.com" className="bg-white/95 text-foreground placeholder:text-muted-foreground" />
                         </div>
                     </div>
 
                     <div className="text-center pt-4">
-                        <Button type="submit" size="lg" disabled={isSubmitting} className="w-full sm:w-auto shadow-lg bg-gradient-to-r from-primary to-primary/80 text-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
-                            <Send className="mr-2 h-5 w-5" />
-                            {isSubmitting ? "Submitting..." : "Submit Inquiry"}
-                        </Button>
+                        <SubmitButton isPending={isPending} />
                     </div>
                 </form>
             </div>

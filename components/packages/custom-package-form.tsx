@@ -1,33 +1,61 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useTransition } from "react";
+import { useFormStatus } from "react-dom";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { submitCustomPackageRequest } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+ 
+const initialState = {
+    success: false,
+    message: "",
+};
 
-type FormState = "idle" | "submitting";
+function SubmitButton({ isPending }: { isPending: boolean }) {
+    const { pending } = useFormStatus();
+    const disabled = pending || isPending;
+    return (
+        <Button type="submit" className="w-full" disabled={disabled}>
+            {disabled ? "Submitting..." : "Submit Request"}
+        </Button>
+    );
+}
 
 export function CustomPackageForm() {
-    const [formState, setFormState] = useState<FormState>("idle");
+    const [state, formAction] = useActionState(submitCustomPackageRequest, initialState);
+    const [isPending, startTransition] = useTransition();
     const formRef = useRef<HTMLFormElement>(null);
+    const { executeRecaptcha } = useGoogleReCaptcha();
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        setFormState("submitting");
+    useEffect(() => {
+        if (state.message) {
+            if (state.success) {
+                toast.success(state.message);
+                formRef.current?.reset();
+            } else {
+                toast.error(state.message);
+            }
+        }
+    }, [state]);
 
-        const formData = new FormData(event.currentTarget);
+    const handleFormSubmit = async (formData: FormData) => {
+        if (!executeRecaptcha) {
+            toast.error("reCAPTCHA not ready. Please try again.");
+            return;
+        }
 
         try {
-            await submitCustomPackageRequest(formData);
-            toast.success("Thank you! Your request has been submitted successfully.");
-            formRef.current?.reset();
+            const token = await executeRecaptcha("custom_package_form");
+            formData.set("g-recaptcha-response", token);
+            startTransition(() => {
+                formAction(formData);
+            });
         } catch (error) {
-            toast.error(error instanceof Error ? error.message : "An unknown error occurred.");
-        } finally {
-            setFormState("idle");
+            toast.error("An error occurred while generating reCAPTCHA token.");
         }
     };
 
@@ -44,37 +72,39 @@ export function CustomPackageForm() {
                 </div>
 
                 <div className="mx-auto mt-10 max-w-xl">
-                    <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+                    <form
+                        ref={formRef}
+                        action={handleFormSubmit}
+                        className="space-y-6"
+                    >
                         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                             <div>
                                 <Label htmlFor="name">Full Name</Label>
-                                <Input type="text" name="name" id="name" required disabled={formState === 'submitting'} className="mt-1.5" />
+                                <Input type="text" name="name" id="name" required className="mt-1.5" />
                             </div>
                             <div>
                                 <Label htmlFor="phone_no">Phone Number</Label>
-                                <Input type="tel" name="phone_no" id="phone_no" required disabled={formState === 'submitting'} className="mt-1.5" />
+                                <Input type="tel" name="phone_no" id="phone_no" required className="mt-1.5" />
                             </div>
                             <div>
                                 <Label htmlFor="departure_city">Departure City</Label>
-                                <Input type="text" name="departure_city" id="departure_city" required disabled={formState === 'submitting'} className="mt-1.5" />
+                                <Input type="text" name="departure_city" id="departure_city" required className="mt-1.5" />
                             </div>
                             <div>
                                 <Label htmlFor="email">Email (Optional)</Label>
-                                <Input type="email" name="email" id="email" disabled={formState === 'submitting'} className="mt-1.5" />
+                                <Input type="email" name="email" id="email" className="mt-1.5" />
                             </div>
                         </div>
                         <div>
                             <Label htmlFor="budget">Your Budget (Optional)</Label>
-                            <Input type="text" name="budget" id="budget" placeholder="e.g., Around 300,000 PKR per person" disabled={formState === 'submitting'} className="mt-1.5" />
+                            <Input type="text" name="budget" id="budget" placeholder="e.g., Around 300,000 PKR per person" className="mt-1.5" />
                         </div>
                         <div>
                             <Label htmlFor="details">Details</Label>
-                            <Textarea name="details" id="details" rows={4} placeholder="Tell us about your desired travel dates, hotel preferences, number of people, or any other special requests." disabled={formState === 'submitting'} className="mt-1.5" />
+                            <Textarea name="details" id="details" rows={4} placeholder="Tell us about your desired travel dates, hotel preferences, number of people, or any other special requests." className="mt-1.5" />
                         </div>
                         <div>
-                            <Button type="submit" className="w-full" disabled={formState === 'submitting'}>
-                                {formState === 'submitting' ? "Submitting..." : "Submit Request"}
-                            </Button>
+                            <SubmitButton isPending={isPending} />
                         </div>
                     </form>
                 </div>

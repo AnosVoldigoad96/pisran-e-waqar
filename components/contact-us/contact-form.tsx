@@ -1,57 +1,65 @@
 "use client";
 
+import { useActionState, useEffect, useRef, useTransition } from "react";
+import { useFormStatus } from "react-dom";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { submitContactInquiry } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { useState } from "react";
-import { supabase } from "@/lib/supabase";
+
+const initialState = {
+    success: false,
+    message: "",
+};
+
+function SubmitButton({ isPending }: { isPending: boolean }) {
+    const { pending } = useFormStatus();
+    const disabled = pending || isPending;
+    return (
+        <Button type="submit" disabled={disabled} size="lg" className="px-12 text-base font-semibold rounded-md shadow-md bg-primary text-primary-foreground transition-all duration-300 ease-in-out hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1">
+            {disabled ? "Sending..." : "Send Message"}
+        </Button>
+    );
+}
 
 export function ContactForm() {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [subject, setSubject] = useState('');
-    const [message, setMessage] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const [state, formAction] = useActionState(submitContactInquiry, initialState);
+    const [isPending, startTransition] = useTransition();
+    const formRef = useRef<HTMLFormElement>(null);
+    const { executeRecaptcha } = useGoogleReCaptcha();
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setIsSubmitting(true);
+    useEffect(() => {
+        if (state.message) {
+            if (state.success) {
+                toast.success(state.message);
+                formRef.current?.reset();
+            } else {
+                toast.error("Submission failed.", {
+                    description: state.message,
+                });
+            }
+        }
+    }, [state]);
 
-        const { error } = await supabase
-            .from('contact_inquiries')
-            .insert({ name, email, phone, subject, message });
+    const handleFormSubmit = async (formData: FormData) => {
+        if (!executeRecaptcha) {
+            toast.error("reCAPTCHA not ready. Please try again.");
+            return;
+        }
 
-        setIsSubmitting(false);
-
-        if (error) {
-            toast.error("Something went wrong. Please try again.", {
-                description: error.message,
+        try {
+            const token = await executeRecaptcha("contact_us_form");
+            formData.set("g-recaptcha-response", token);
+            startTransition(() => {
+                formAction(formData);
             });
-        } else {
-            toast.success("Your message has been sent successfully!");
-            setIsSubmitted(true);
-            // Reset form
-            setName('');
-            setEmail('');
-            setPhone('');
-            setSubject('');
-            setMessage('');
+        } catch (error) {
+            toast.error("An error occurred while generating reCAPTCHA token.");
         }
     };
-
-    if (isSubmitted) {
-        return (
-            <div className="bg-secondary text-secondary-foreground p-8 rounded-xl shadow-lg flex flex-col items-center justify-center text-center">
-                <h3 className="text-2xl font-bold">Thank You!</h3>
-                <p className="mt-2">Your message has been received. We will get back to you shortly.</p>
-                <Button onClick={() => setIsSubmitted(false)} className="mt-6">Send Another Message</Button>
-            </div>
-        );
-    }
 
     return (
         <div className="bg-background p-8 rounded-xl shadow-lg">
@@ -61,33 +69,31 @@ export function ContactForm() {
                     Have a question or need to book a trip? Fill out the form below.
                 </p>
             </div>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form ref={formRef} action={handleFormSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                     <div className="space-y-2">
                         <Label htmlFor="name">Full Name</Label>
-                        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Your Name" required />
+                        <Input id="name" name="name" type="text" placeholder="Your Name" required />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="email">Email Address</Label>
-                        <Input id="email" value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="you@example.com" required />
+                        <Input id="email" name="email" type="email" placeholder="you@example.com" required />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="phone">Phone Number</Label>
-                        <Input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} type="tel" placeholder="0300-1234567" required />
+                        <Input id="phone" name="phone" type="tel" placeholder="0300-1234567" required />
                     </div>
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="subject">Subject</Label>
-                    <Input id="subject" value={subject} onChange={(e) => setSubject(e.target.value)} type="text" placeholder="Inquiry about Umrah packages" required />
+                    <Input id="subject" name="subject" type="text" placeholder="Inquiry about Umrah packages" required />
                 </div>
                 <div className="space-y-2">
                     <Label htmlFor="message">Message</Label>
-                    <Textarea id="message" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Your message..." required rows={5} />
+                    <Textarea id="message" name="message" placeholder="Your message..." required rows={5} />
                 </div>
                 <div className="text-center pt-4">
-                    <Button type="submit" disabled={isSubmitting} size="lg" className="px-12 text-base font-semibold rounded-md shadow-md bg-primary text-primary-foreground transition-all duration-300 ease-in-out hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1">
-                        {isSubmitting ? "Sending..." : "Send Message"}
-                    </Button>
+                    <SubmitButton isPending={isPending} />
                 </div>
             </form>
         </div>
