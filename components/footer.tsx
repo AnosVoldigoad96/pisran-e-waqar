@@ -50,7 +50,7 @@ export function Footer({ settings }: FooterProps) {
 
     return (
         <footer className="bg-primary text-primary-foreground">
-            <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-8 lg:px-32 text-left">
+            <div className="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 text-left">
                 {/* "Why Choose Us" Section */}
                 <div className="py-12 text-center">
                     <h3 className="text-2xl font-bold mb-8">Why Choose Us</h3>

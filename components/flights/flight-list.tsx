@@ -43,7 +43,7 @@ export function FlightList({ flights, contactInfo }: { flights: Flight[], contac
 
     return (
         <div className="w-full bg-background">
-            <div className="container mx-auto px-4 sm:px-8 lg:px-32 py-16">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16">
                 {flights.length === 0 ? (
                     <div className="text-center py-20">
                         <Plane className="mx-auto h-12 w-12 text-muted-foreground" />

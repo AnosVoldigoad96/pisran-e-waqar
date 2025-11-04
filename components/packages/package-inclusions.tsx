@@ -21,7 +21,7 @@ export function PackageInclusions() {
             <div className="absolute inset-0 bg-black/40 z-10" />
             <div className="absolute inset-0 bg-secondary/30 z-10" />
             <div className="relative z-20">
-            <div className="container mx-auto px-4 sm:px-8 lg:px-32">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
                         Included in Every Package

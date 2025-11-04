@@ -13,7 +13,7 @@ export function ContactHeader() {
             <div className="absolute inset-0 bg-black/50 z-10" />
             <div className="absolute inset-0 bg-secondary/30 z-10" />
             <div className="relative z-20">
-                <div className="container mx-auto px-4 sm:px-8 lg:px-32 py-16 sm:py-20 text-center">
+                <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16 sm:py-20 text-center">
                     <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                         Contact Us
                     </h1>

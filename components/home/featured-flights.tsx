@@ -42,7 +42,7 @@ export function FeaturedFlights({ flights, contactInfo }: { flights: Flight[], c
 
     return (
         <section className="w-full pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background">
-            <div className="container mx-auto px-4 sm:px-8 lg:px-32">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                         Featured Flight Deals

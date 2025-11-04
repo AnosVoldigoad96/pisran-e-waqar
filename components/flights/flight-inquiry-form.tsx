@@ -78,7 +78,7 @@ export function FlightInquiryForm() {
             <div className="absolute inset-0 bg-black/50 z-10" />
             <div className="absolute inset-0 bg-secondary/30 z-10" />
 
-            <div className="relative z-20 container mx-auto px-4 sm:px-8 lg:px-16 py-16 sm:py-24 text-center">
+            <div className="relative z-20 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16 sm:py-24 text-center">
                 <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Find Your Perfect Flight</h1>
                 <p className="mt-4 text-lg max-w-2xl mx-auto text-white/80">
                     Enter your travel details below and let our experts find the best deals for you.

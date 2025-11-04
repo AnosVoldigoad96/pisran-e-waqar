@@ -39,9 +39,9 @@ export function Header({ settings }: HeaderProps) {
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-primary-foreground/20 bg-primary text-primary-foreground">
-            <div className="flex h-16 items-center justify-between px-4 sm:px-8 lg:px-32">
+            <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
                 {/* Left side: Logo and Brand Name */}
-                <div>
+                <div className="flex-shrink-0">
                     <Link href="/" className="flex items-center">
                         {settings?.site_logo_url ? (
                             <Image
@@ -49,19 +49,21 @@ export function Header({ settings }: HeaderProps) {
                                 alt={settings.brand_name || "Pisran-e-Waqar"}
                                 width={250}
                                 height={100}
-                                className="h-auto w-[156px] object-contain sm:w-[312px]"
+                                className="h-auto w-[120px] object-contain sm:w-[180px] md:w-[220px] lg:w-[250px]"
                             />
-                        ) : null}
+                        ) : (
+                            <span className="text-lg font-bold sm:text-xl md:text-2xl">{settings?.brand_name || "Pisran-e-Waqar"}</span>
+                        )}
                     </Link>
                 </div>
 
                 {/* Center: Desktop Navigation Links */}
-                <div className="hidden md:block">
+                <div className="hidden md:flex md:flex-1 md:justify-center">
                     <NavigationLinks />
                 </div>
 
                 {/* Right side: Icons */}
-                <div className="flex items-center space-x-1 sm:space-x-2">
+                <div className="flex flex-shrink-0 items-center space-x-1 sm:space-x-2">
                     {/* Mobile WhatsApp Icon with Pulse */}
                     <div className="md:hidden">
                         {settings?.whatsapp_no && (

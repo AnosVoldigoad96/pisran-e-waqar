@@ -31,7 +31,7 @@ export function Hero({ heroData, contactInfo }: { heroData: HeroData | null, con
             />
             <div className="absolute inset-0 bg-black/40 z-10" />
             <div className="absolute inset-0 bg-secondary/20 z-10" />
-            <div className="relative z-20 container mx-auto px-4 sm:px-8 lg:px-32">
+            <div className="relative z-20 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
                 <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl drop-shadow-lg">
                     {heroData?.hero_title || defaultTitle}
                 </h1>

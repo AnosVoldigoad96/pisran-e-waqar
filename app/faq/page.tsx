@@ -58,7 +58,7 @@ export default async function FaqPage() {
     return (
         <div className="w-full bg-background">
             <div className="w-full bg-secondary py-16">
-                <div className="container mx-auto px-4 sm:px-8 lg:px-32 text-center">
+                <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 text-center">
                     <h1 className="text-3xl font-bold tracking-tight text-secondary-foreground sm:text-4xl">
                         Frequently Asked Questions
                     </h1>
@@ -67,7 +67,7 @@ export default async function FaqPage() {
                     </p>
                 </div>
             </div>
-            <div className="container mx-auto px-4 sm:px-8 lg:px-32 py-16">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16">
                 <Accordion type="single" collapsible className="w-full max-w-4xl mx-auto">
                     {faqs.map((faq) => (
                         <AccordionItem key={faq.id} value={`item-${faq.id}`}>

@@ -12,10 +12,12 @@ const config = {
     container: {
       center: true,
       padding: {
-        DEFAULT: '1rem', // 16px on mobile
-        sm: '2rem',      // 32px on small screens
-        md: '2rem',      // 32px on medium screens
-        lg: '8rem',      // 128px on large screens
+        DEFAULT: '1rem',  // 16px on mobile
+        sm: '1.5rem',      // 24px on small screens (640px+)
+        md: '2rem',        // 32px on medium screens (768px+)
+        lg: '3rem',        // 48px on large screens (1024px+)
+        xl: '4rem',        // 64px on xl screens (1280px+)
+        '2xl': '5rem',     // 80px on 2xl screens (1400px+)
       },
     },
     screens: {

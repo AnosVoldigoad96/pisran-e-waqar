@@ -45,7 +45,7 @@ export function HotelList({ hotels, contactInfo }: { hotels: Hotel[], contactInf
                 />
                 <div className="absolute inset-0 bg-black/40 z-10" />
                 <div className="absolute inset-0 bg-secondary/30 z-10" />
-                <div className="relative z-20 container mx-auto px-4 sm:px-8 lg:px-32">
+                <div className="relative z-20 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
                     <div className="mx-auto max-w-2xl text-center">
                         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
                             Our Partner Hotels
@@ -56,7 +56,7 @@ export function HotelList({ hotels, contactInfo }: { hotels: Hotel[], contactInf
                     </div>
                 </div>
             </div>
-            <div className="container mx-auto px-4 sm:px-8 lg:px-32 py-16">
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16">
                 {hotels.length === 0 ? (
                     <div className="text-center py-20">
                         <Building className="mx-auto h-12 w-12 text-muted-foreground" />
@@ -73,7 +73,7 @@ export function HotelList({ hotels, contactInfo }: { hotels: Hotel[], contactInf
 
             {/* --- CTA Section --- */}
             <div className="w-full bg-[#18181b] text-white">
-                <div className="container mx-auto px-4 sm:px-8 lg:px-32 py-16 sm:py-20 text-center">
+                <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16 sm:py-20 text-center">
                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Ready for a Blessed Journey?</h2>
                     <p className="mt-4 text-lg max-w-2xl mx-auto text-white/80">
                         Our handpicked hotels ensure your comfort, so you can focus on your spiritual journey. Let us handle the details of your Umrah booking.
