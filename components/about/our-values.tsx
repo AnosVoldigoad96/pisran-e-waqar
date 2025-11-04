@@ -20,8 +20,8 @@ const values = [
 
 export function OurValues() {
     return (
-        <div className="bg-background py-16 sm:py-24">
-            <div className="container px-4 sm:px-8 lg:px-32">
+        <div className="w-full bg-background py-16 sm:py-24">
+            <div className="container mx-auto px-4 sm:px-8 lg:px-32">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Our Core Values</h2>
                     <p className="mt-6 text-lg leading-8 text-muted-foreground">The principles that guide our every action and define who we are.</p>

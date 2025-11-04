@@ -41,8 +41,8 @@ export function FlightList({ flights, contactInfo }: { flights: Flight[], contac
     const roundTripFlights = flights.filter(f => f.return_departure_time);
 
     return (
-        <div className="bg-background">
-            <div className="container px-4 sm:px-8 lg:px-32 py-16">
+        <div className="w-full bg-background">
+            <div className="container mx-auto px-4 sm:px-8 lg:px-32 py-16">
                 {flights.length === 0 ? (
                     <div className="text-center py-20">
                         <Plane className="mx-auto h-12 w-12 text-muted-foreground" />

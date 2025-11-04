@@ -20,7 +20,7 @@ export function Hero({ heroData, contactInfo }: { heroData: HeroData | null, con
     const whatsappLink = `https://wa.me/${contactInfo?.whatsapp_no}`;
 
     return (
-        <div className="relative h-[60vh] min-h-[400px] sm:h-[70vh] md:h-screen flex items-center justify-center text-center text-white overflow-hidden">
+        <div className="relative w-full h-[60vh] min-h-[400px] sm:h-[70vh] md:h-screen flex items-center justify-center text-center text-white overflow-hidden">
             <Image
                 src={heroData?.hero_image_url || defaultImageUrl}
                 alt="A beautiful view of the Kaaba"
@@ -31,7 +31,7 @@ export function Hero({ heroData, contactInfo }: { heroData: HeroData | null, con
             />
             <div className="absolute inset-0 bg-black/40 z-10" />
             <div className="absolute inset-0 bg-secondary/20 z-10" />
-            <div className="relative z-20 container px-4 sm:px-8 lg:px-32">
+            <div className="relative z-20 container mx-auto px-4 sm:px-8 lg:px-32">
                 <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl drop-shadow-lg">
                     {heroData?.hero_title || defaultTitle}
                 </h1>

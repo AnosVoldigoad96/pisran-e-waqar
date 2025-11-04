@@ -28,9 +28,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function PrivacyPolicyPage() {
     return (
-        <div className="bg-background">
-            <div className="bg-secondary py-16">
-                <div className="container px-4 sm:px-8 lg:px-32 text-center">
+        <div className="w-full bg-background">
+            <div className="w-full bg-secondary py-16">
+                <div className="container mx-auto px-4 sm:px-8 lg:px-32 text-center">
                     <h1 className="text-3xl font-bold tracking-tight text-secondary-foreground sm:text-4xl">
                         Privacy Policy
                     </h1>
@@ -39,7 +39,7 @@ export default function PrivacyPolicyPage() {
                     </p>
                 </div>
             </div>
-            <div className="container px-4 sm:px-8 lg:px-32 py-16">
+            <div className="container mx-auto px-4 sm:px-8 lg:px-32 py-16">
                 <div className="prose prose-lg max-w-4xl mx-auto">
                     <p>
                         This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your information when You use the Service and tells You about Your privacy rights and how the law protects You.

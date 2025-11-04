@@ -23,8 +23,8 @@ export function TestimonialsSection({ testimonials }: { testimonials: Testimonia
     }
 
     return (
-        <section className="pt-0 sm:pt-0 pb-8 sm:pb-12 bg-background">
-            <div className="container px-4 sm:px-8 lg:px-32">
+        <section className="w-full pt-0 sm:pt-0 pb-8 sm:pb-12 bg-background">
+            <div className="container mx-auto px-4 sm:px-8 lg:px-32">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                         What Our Pilgrims Say

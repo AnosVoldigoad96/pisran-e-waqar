@@ -11,8 +11,8 @@ export function CompanyIntro({ aboutContent }: { aboutContent: AboutContent | nu
     const defaultMoto = "\"Service with sincerity, travel with tranquility.\" We strive to ensure every aspect of your journey is handled with the utmost care, providing peace of mind from departure to return.";
 
     return (
-        <div className="bg-[#fff6f6]">
-            <div className="container px-4 sm:px-8 lg:px-32 pt-16 sm:pt-24 pb-8 sm:pb-12">
+        <div className="w-full bg-[#fff6f6]">
+            <div className="container mx-auto px-4 sm:px-8 lg:px-32 pt-16 sm:pt-24 pb-8 sm:pb-12">
                 <div className="mx-auto max-w-2xl text-center">
                     <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                         Your Sacred Journey, Our Commitment

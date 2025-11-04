@@ -210,16 +210,18 @@ export default async function HomePage() {
     const testimonials = await getTestimonials();
     const faqs = await getFaqs();
 
-    return <>
-        <Hero heroData={heroData} contactInfo={contactInfo} />
-        <TrustedSection />
-        <FeaturedPackages packages={featuredPackages} contactInfo={contactInfo} />
-        <ServicesSection />
-        <FeaturedFlights flights={featuredFlights} contactInfo={contactInfo} />
-        <FollowUsSection socialLinks={contactInfo?.social_links || null} />
-        <FeaturedHotels hotels={featuredHotels} />
-        <TestimonialsSection testimonials={testimonials} />
-        <FaqSection faqs={faqs} />
-        <CtaSection contactInfo={contactInfo} />
-    </>;
+    return (
+        <>
+            <Hero heroData={heroData} contactInfo={contactInfo} />
+            <TrustedSection />
+            <FeaturedPackages packages={featuredPackages} contactInfo={contactInfo} />
+            <ServicesSection />
+            <FeaturedFlights flights={featuredFlights} contactInfo={contactInfo} />
+            <FollowUsSection socialLinks={contactInfo?.social_links || null} />
+            <FeaturedHotels hotels={featuredHotels} />
+            <TestimonialsSection testimonials={testimonials} />
+            <FaqSection faqs={faqs} />
+            <CtaSection contactInfo={contactInfo} />
+        </>
+    );
 }

@@ -73,9 +73,9 @@ export async function FlightItineraries() {
     };
 
     return (
-        <section className="py-12 sm:py-16">
+        <section className="w-full py-12 sm:py-16">
             {/* This outer div handles the padding and centering */}
-            <div className="container px-4 sm:px-8 lg:px-32">
+            <div className="container mx-auto px-4 sm:px-8 lg:px-32">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                         Flight Itineraries

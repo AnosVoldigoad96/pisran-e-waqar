@@ -14,11 +14,16 @@ const config = {
       padding: {
         DEFAULT: '1rem', // 16px on mobile
         sm: '2rem',      // 32px on small screens
+        md: '2rem',      // 32px on medium screens
         lg: '8rem',      // 128px on large screens
       },
-      screens: {
-        "2xl": "1400px",
-      },
+    },
+    screens: {
+      sm: "640px",
+      md: "768px",
+      lg: "1024px",
+      xl: "1280px",
+      "2xl": "1400px",
     },
     extend: {
       colors: {

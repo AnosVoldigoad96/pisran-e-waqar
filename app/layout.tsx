@@ -12,6 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Pisran-e-Waqar",
   description: "Your trusted partner for Umrah journeys.",
+  viewport: "width=device-width, initial-scale=1.0, maximum-scale=5.0",
 };
 
 // This function fetches the site settings from Supabase
@@ -45,9 +46,9 @@ export default async function RootLayout({
       <body className={`${inter.className} bg-background`}>
         <RecaptchaProvider>
           {/* This container div centers everything inside it */}
-          <div className="relative flex min-h-screen flex-col">
+          <div className="relative flex min-h-screen flex-col w-full overflow-x-hidden">
             <Header settings={settings} />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1 w-full">{children}</main>
             <Footer settings={settings} />
             <Toaster />
           </div>

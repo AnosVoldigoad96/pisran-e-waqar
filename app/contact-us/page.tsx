@@ -60,8 +60,8 @@ export default async function ContactUsPage() {
     return (
         <>
             <ContactHeader />
-            <div className="bg-[#fff6f6]">
-                <div className="container px-4 sm:px-8 lg:px-32 py-16 sm:py-24">
+            <div className="w-full bg-[#fff6f6]">
+                <div className="container mx-auto px-4 sm:px-8 lg:px-32 py-16 sm:py-24">
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
                         <div className="lg:col-span-3 space-y-8">
                             <ContactForm />

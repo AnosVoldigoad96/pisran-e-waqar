@@ -112,6 +112,34 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+html {
+  width: 100%;
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  @apply bg-background text-foreground;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Ensure containers are properly centered */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

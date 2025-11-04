@@ -13,8 +13,8 @@ export function FlightCTA({ contactInfo }: { contactInfo: ContactInfo | null }) 
     const whatsappLink = `https://wa.me/${contactInfo?.whatsapp_no}`;
 
     return (
-        <div className="bg-[#18181b] text-white">
-            <div className="container px-4 sm:px-8 lg:px-32 py-16 sm:py-20 text-center">
+        <div className="w-full bg-[#18181b] text-white">
+            <div className="container mx-auto px-4 sm:px-8 lg:px-32 py-16 sm:py-20 text-center">
                 <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Ready to Book Your Flight?</h2>
                 <p className="mt-4 text-lg max-w-2xl mx-auto text-white/80">
                     Let our travel experts handle the details. Contact us for personalized flight options and the best prices available.

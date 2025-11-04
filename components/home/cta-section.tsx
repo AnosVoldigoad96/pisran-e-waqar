@@ -11,8 +11,8 @@ export function CtaSection({ contactInfo }: { contactInfo: ContactInfo | null })
     const whatsappLink = `https://wa.me/${contactInfo?.whatsapp_no}`;
 
     return (
-        <section className="bg-[#18181b]">
-            <div className="container px-4 sm:px-8 lg:px-32">
+        <section className="w-full bg-[#18181b]">
+            <div className="container mx-auto px-4 sm:px-8 lg:px-32">
                 <div className="mx-auto max-w-4xl pt-16 pb-8 sm:pt-24 sm:pb-12 text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
                         Begin Your Sacred Journey Today

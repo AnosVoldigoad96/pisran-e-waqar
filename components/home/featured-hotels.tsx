@@ -30,8 +30,8 @@ export function FeaturedHotels({ hotels }: { hotels: Hotel[] }) {
     }
 
     return (
-        <section className="pt-8 sm:pt-12 pb-16 sm:pb-24 bg-background">
-            <div className="container px-4 sm:px-8 lg:px-32">
+        <section className="w-full pt-8 sm:pt-12 pb-16 sm:pb-24 bg-background">
+            <div className="container mx-auto px-4 sm:px-8 lg:px-32">
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                         Our Partner Hotels
