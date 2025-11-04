@@ -4,6 +4,7 @@ import { Plane, PlaneLanding, PlaneTakeoff, ArrowRightLeft, ChevronsLeftRight } 
 import { Button } from "../ui/button";
 import { WhatsAppIcon } from "../icons/whatsapp-icon";
 import Image from "next/image";
+import { format } from "date-fns";
 import {
     Carousel,
     CarouselContent,
@@ -106,11 +107,13 @@ export function FlightCard({ flight, contactInfo }: { flight: Flight, contactInf
     const whatsappLink = `https://wa.me/${contactInfo?.whatsapp_no}`;
     const formatTime = (dateString: string | null) => {
         if (!dateString) return 'N/A';
-        return new Date(dateString).toLocaleTimeString('en-US', {
-            hour: 'numeric',
-            minute: '2-digit',
-            hour12: true
-        });
+        try {
+            const date = new Date(dateString);
+            // Use date-fns for consistent formatting across server and client
+            return format(date, "h:mm a");
+        } catch (error) {
+            return 'N/A';
+        }
     };
 
     const isRoundTrip = !!flight.return_departure_time;
@@ -182,7 +185,7 @@ export function FlightCard({ flight, contactInfo }: { flight: Flight, contactInf
                                 </a>
                             </Button>
                         )}
-                        <p className="text-right text-xl font-bold text-primary">PKR {flight.price.toLocaleString()}</p>
+                        <p className="text-right text-xl font-bold text-primary">PKR {flight.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                     </div>
                 )}
             </div>

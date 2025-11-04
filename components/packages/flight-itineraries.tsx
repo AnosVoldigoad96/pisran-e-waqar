@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 import { PlaneTakeoff, PlaneLanding, Plane } from "lucide-react";
+import { format } from "date-fns";
 
 // Define the structure of our data based on your SQL definitions
 type FlightSegment = {
@@ -65,11 +66,13 @@ export async function FlightItineraries() {
     const itineraries = await getItineraries();
     const formatElegantDate = (dateString: string | null) => {
         if (!dateString) return 'N/A';
-        const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = date.toLocaleString('default', { month: 'short' });
-        const year = String(date.getFullYear()).slice(-2);
-        return `${day} ${month} '${year}`;
+        try {
+            const date = new Date(dateString);
+            // Use date-fns for consistent formatting across server and client
+            return format(date, "dd MMM ''yy");
+        } catch (error) {
+            return 'N/A';
+        }
     };
 
     return (
