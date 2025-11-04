@@ -11,7 +11,7 @@ import {
     CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Button } from "@/components/ui/button";
-import { Star, MapPin, ChevronsLeftRight, MoreHorizontal, X, CheckCircle2, Eye } from "lucide-react";
+import { Star, MapPin, ChevronsLeftRight, MoreHorizontal, X, CheckCircle2 } from "lucide-react";
 
 type Hotel = {
     id: number;
@@ -30,9 +30,16 @@ export function FeaturedHotels({ hotels }: { hotels: Hotel[] }) {
     }
 
     return (
-        <section className="w-full pt-8 sm:pt-12 pb-16 sm:pb-24 bg-background">
-            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        <section className="w-full pt-8 sm:pt-12 pb-16 sm:pb-24 bg-gradient-to-b from-background via-background to-muted/30 relative overflow-hidden">
+            {/* Decorative gradient circles */}
+            <div className="absolute top-20 right-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-20 left-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl" />
+            
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 relative z-10">
                 <div className="mx-auto max-w-2xl text-center">
+                    <div className="inline-block px-4 py-2 bg-gradient-to-r from-secondary/10 to-accent/10 rounded-full mb-4">
+                        <span className="text-sm font-semibold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Partner Hotels</span>
+                    </div>
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                         Our Partner Hotels
                     </h2>
@@ -74,26 +81,26 @@ function HotelCard({ hotel, flippedCardId, setFlippedCardId }: { hotel: Hotel, f
     return (
         <div className="group aspect-square p-1 [perspective:1000px] transition-transform duration-300 hover:scale-105">
             <div
-                className="relative h-full w-full rounded-lg shadow-md transition-transform duration-700 [transform-style:preserve-3d]"
+                className="relative h-full w-full rounded-xl border-2 border-border bg-card shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/20 hover:-translate-y-2 [transform-style:preserve-3d]"
                 style={{ transform: flippedCardId === hotel.id ? 'rotateY(180deg)' : 'none' }}
             >
                 {/* Front of the card */}
-                <div className="absolute flex flex-col w-full h-full rounded-lg overflow-hidden border bg-card [backface-visibility:hidden]">
+                <div className="absolute flex flex-col w-full h-full rounded-xl overflow-hidden border-2 border-border bg-card [backface-visibility:hidden]">
                     <div className="relative w-full aspect-video group-hover:aspect-square transition-all duration-300">
                         <Image
                             src={hotel.images?.[0] || "/placeholder.svg"}
                             alt={hotel.name}
                             fill
                             sizes="(max-width: 768px) 50vw, 33vw"
-                            className="object-cover"
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                     </div>
 
                     {/* Content Area */}
                     <div className="flex flex-1 flex-col justify-between p-4">
                         <div>
-                            <h3 className="font-bold text-lg">{hotel.name}</h3>
-                            <p className="text-sm text-muted-foreground flex items-center gap-2"><MapPin className="h-4 w-4" />{hotel.city}</p>
+                            <h3 className="font-bold text-lg group-hover:text-secondary transition-colors duration-300">{hotel.name}</h3>
+                            <p className="text-sm text-muted-foreground flex items-center gap-2 mt-1"><MapPin className="h-4 w-4 text-secondary" />{hotel.city}</p>
                         </div>
                         {hotel.rating && (
                             <div className="flex items-center gap-1 text-amber-500 mt-2">
@@ -109,7 +116,7 @@ function HotelCard({ hotel, flippedCardId, setFlippedCardId }: { hotel: Hotel, f
                 </div>
 
                 {/* Back of the card */}
-                <div className="absolute w-full h-full rounded-lg border bg-card p-4 sm:p-6 overflow-y-auto [backface-visibility:hidden] [transform:rotateY(180deg)]">
+                <div className="absolute w-full h-full rounded-xl border-2 border-border bg-card p-4 sm:p-6 overflow-y-auto [backface-visibility:hidden] [transform:rotateY(180deg)]">
                     <button onClick={() => setFlippedCardId(null)} className="absolute top-2 right-2 text-muted-foreground p-1.5 rounded-full hover:bg-accent transition-colors z-10">
                         <X className="h-5 w-5" />
                     </button>

@@ -17,18 +17,21 @@ export function NavigationLinks() {
     const pathname = usePathname();
 
     return (
-        <nav className="flex items-center space-x-4 text-sm font-medium md:space-x-6">
-            {navLinks.map((link) => {
+        <nav className="flex items-center space-x-1 text-sm font-medium md:space-x-2">
+            {navLinks.map((link, index) => {
                 const isActive = pathname === link.href;
                 return (
                     <Link
                         key={link.href}
                         href={link.href}
-                        className={cn("relative cursor-pointer py-2 text-primary-foreground/60 transition-colors hover:text-primary-foreground/80 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-accent after:transition-all after:duration-300 hover:after:w-full",
-                            isActive && "text-primary-foreground after:w-full"
+                        className={cn(
+                            "group relative cursor-pointer rounded-lg px-3 py-2 text-[#F4F4F4]/60 transition-all duration-300 hover:text-[#F4F4F4] hover:bg-white/5",
+                            "after:absolute after:bottom-0 after:left-1/2 after:h-[2px] after:w-0 after:-translate-x-1/2 after:bg-gradient-to-r after:from-transparent after:via-accent after:to-transparent after:transition-all after:duration-300 hover:after:w-full",
+                            isActive && "text-[#F4F4F4] bg-white/10 after:w-full"
                         )}
+                        style={{ animationDelay: `${index * 50}ms` }}
                     >
-                        {link.label}
+                        <span className="relative z-10">{link.label}</span>
                     </Link>
                 );
             })}

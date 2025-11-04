@@ -17,7 +17,7 @@ export function CompanyIntro({ aboutContent }: { aboutContent: AboutContent | nu
     ];
 
     return (
-        <div className="w-full bg-gradient-to-b from-[#fff6f6] via-background to-[#fff6f6] relative overflow-hidden">
+        <div className="w-full bg-gradient-to-b from-background via-background to-background relative overflow-hidden">
             {/* Decorative background elements */}
             <div className="absolute top-0 left-0 w-72 h-72 bg-secondary/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
@@ -45,15 +45,16 @@ export function CompanyIntro({ aboutContent }: { aboutContent: AboutContent | nu
                     {stats.map((stat, index) => (
                         <div
                             key={index}
-                            className="group relative bg-gradient-to-br from-primary to-primary/80 text-primary-foreground p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden"
+                            className="group relative bg-gradient-to-br from-secondary/10 via-card to-accent/10 border-2 border-border p-8 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-secondary/30 transition-all duration-500 hover:-translate-y-2 hover:scale-105 hover:border-secondary/50 overflow-hidden"
+                            style={{ animationDelay: `${index * 100}ms` }}
                         >
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/20 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                            <div className="absolute top-0 right-0 w-32 h-32 bg-secondary/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-accent/10 transition-colors duration-500" />
                             <div className="relative z-10">
-                                <div className="flex items-center justify-center h-14 w-14 mx-auto mb-4 bg-primary-foreground/20 rounded-xl">
-                                    <stat.icon className="h-7 w-7 text-primary-foreground" />
+                                <div className="flex items-center justify-center h-14 w-14 mx-auto mb-4 bg-gradient-to-br from-secondary/20 to-accent/20 rounded-xl group-hover:scale-110 transition-transform duration-300">
+                                    <stat.icon className="h-7 w-7 text-secondary group-hover:text-accent transition-colors duration-300" />
                                 </div>
-                                <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                                <div className="text-sm font-medium opacity-90">{stat.label}</div>
+                                <div className="text-4xl font-bold mb-2 bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">{stat.value}</div>
+                                <div className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors duration-300">{stat.label}</div>
                             </div>
                         </div>
                     ))}
@@ -62,11 +63,11 @@ export function CompanyIntro({ aboutContent }: { aboutContent: AboutContent | nu
                 {/* Main Content Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
                     {/* Company Introduction Card */}
-                    <div className="group relative bg-gradient-to-br from-secondary to-secondary/90 text-secondary-foreground p-8 sm:p-10 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 overflow-hidden">
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
+                    <div className="group relative bg-gradient-to-br from-secondary to-secondary/90 text-secondary-foreground p-8 sm:p-10 rounded-2xl border-2 border-secondary/30 shadow-xl hover:shadow-2xl hover:shadow-secondary/40 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] overflow-hidden">
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500" />
                         <div className="relative z-10">
                             <div className="flex items-center gap-3 mb-6">
-                                <div className="flex items-center justify-center h-12 w-12 bg-white/20 rounded-xl backdrop-blur-sm">
+                                <div className="flex items-center justify-center h-12 w-12 bg-white/20 rounded-xl backdrop-blur-sm group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300">
                                     <Building className="h-6 w-6 text-white" />
                                 </div>
                                 <h3 className="text-2xl font-bold">Our Company</h3>
@@ -74,33 +75,33 @@ export function CompanyIntro({ aboutContent }: { aboutContent: AboutContent | nu
                             <p className="text-lg leading-relaxed text-secondary-foreground/90 mb-6">
                                 {aboutContent?.intro || defaultIntro}
                             </p>
-                            <div className="flex items-center gap-2 text-sm font-semibold opacity-90 group-hover:gap-4 transition-all">
+                            <div className="flex items-center gap-2 text-sm font-semibold opacity-90 group-hover:gap-4 transition-all duration-300">
                                 <span>Learn more about us</span>
-                                <ArrowRight className="h-4 w-4" />
+                                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
                             </div>
                         </div>
                     </div>
 
                     {/* Mission/Motto Card */}
-                    <div className="group relative rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+                    <div className="group relative rounded-2xl border-2 border-border shadow-xl overflow-hidden hover:shadow-2xl hover:shadow-secondary/30 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02]">
                         <Image
                             src="https://lvylckenosoiinbragac.supabase.co/storage/v1/object/public/site-images/public/moto.png"
                             alt="Decorative background for motto"
                             fill
                             sizes="(max-width: 1024px) 100vw, 50vw"
                             style={{ objectFit: 'cover' }}
-                            className="z-0 transition-transform duration-500 group-hover:scale-110"
+                            className="z-0 transition-transform duration-700 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary/80 via-primary/70 to-secondary/80 z-10" />
-                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300 z-20" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-secondary/80 via-secondary/70 to-accent/80 z-10" />
+                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500 z-20" />
                         <div className="relative z-30 h-full flex flex-col items-center justify-center p-8 sm:p-10 text-center">
-                            <div className="flex items-center justify-center h-16 w-16 bg-white/20 rounded-full backdrop-blur-sm mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <div className="flex items-center justify-center h-16 w-16 bg-white/20 rounded-full backdrop-blur-sm mb-6 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
                                 <Heart className="h-8 w-8 text-white" />
                             </div>
-                            <div className="text-2xl font-bold text-white mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="text-2xl font-bold text-white mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                                 Our Mission
                             </div>
-                            <p className="text-lg sm:text-xl text-white font-bold italic leading-relaxed">
+                            <p className="text-lg sm:text-xl text-white font-bold italic leading-relaxed drop-shadow-lg">
                                 &quot;{aboutContent?.moto || defaultMoto}&quot;
                             </p>
                         </div>
@@ -108,9 +109,12 @@ export function CompanyIntro({ aboutContent }: { aboutContent: AboutContent | nu
                 </div>
 
                 {/* Additional Info Section */}
-                <div className="bg-gradient-to-r from-accent/10 via-secondary/10 to-accent/10 rounded-2xl p-8 sm:p-12 border border-secondary/20">
+                <div className="bg-gradient-to-r from-accent/10 via-secondary/10 to-accent/10 rounded-2xl p-8 sm:p-12 border-2 border-secondary/20 shadow-lg hover:shadow-xl transition-all duration-300">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                         <div>
+                            <div className="inline-block px-4 py-2 bg-secondary/10 rounded-full mb-4">
+                                <span className="text-sm font-semibold text-secondary">Why Choose Us?</span>
+                            </div>
                             <h3 className="text-2xl font-bold text-foreground mb-4">Why Choose Us?</h3>
                             <p className="text-muted-foreground leading-relaxed mb-6">
                                 With years of experience and thousands of satisfied pilgrims, we understand what it takes to make your Umrah journey truly special. Our commitment goes beyond just booking your trip—we ensure every detail is perfect.
@@ -122,25 +126,25 @@ export function CompanyIntro({ aboutContent }: { aboutContent: AboutContent | nu
                                     "24/7 support before, during, and after your trip",
                                     "Trusted partnerships with premium hotels and airlines"
                                 ].map((item, index) => (
-                                    <li key={index} className="flex items-start gap-3">
+                                    <li key={index} className="flex items-start gap-3 group/item hover:translate-x-2 transition-transform duration-300">
                                         <div className="flex-shrink-0 mt-1">
-                                            <div className="h-2 w-2 rounded-full bg-secondary" />
+                                            <div className="h-2 w-2 rounded-full bg-secondary group-hover/item:bg-accent group-hover/item:scale-150 transition-all duration-300" />
                                         </div>
-                                        <span className="text-foreground">{item}</span>
+                                        <span className="text-foreground group-hover/item:text-secondary transition-colors duration-300">{item}</span>
                                     </li>
                                 ))}
                             </ul>
                         </div>
-                        <div className="relative h-64 sm:h-80 rounded-xl overflow-hidden">
+                        <div className="relative h-64 sm:h-80 rounded-xl overflow-hidden group/image">
                             <Image
                                 src="https://lvylckenosoiinbragac.supabase.co/storage/v1/object/public/site-images/public/moto.png"
                                 alt="Company commitment illustration"
                                 fill
                                 sizes="(max-width: 768px) 100vw, 50vw"
                                 style={{ objectFit: 'cover' }}
-                                className="rounded-xl"
+                                className="rounded-xl transition-transform duration-500 group-hover/image:scale-110"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 to-transparent" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 via-secondary/30 to-transparent group-hover/image:from-secondary/70 transition-colors duration-500" />
                         </div>
                     </div>
                 </div>

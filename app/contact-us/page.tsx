@@ -60,8 +60,12 @@ export default async function ContactUsPage() {
     return (
         <>
             <ContactHeader />
-            <div className="w-full bg-[#fff6f6]">
-                <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16 sm:py-24">
+            <div className="w-full bg-gradient-to-b from-background via-background to-muted/20 relative overflow-hidden">
+                {/* Decorative gradient circles */}
+                <div className="absolute top-20 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+                <div className="absolute bottom-20 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+                
+                <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16 sm:py-24 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
                         <div className="lg:col-span-3 space-y-8">
                             <ContactForm />

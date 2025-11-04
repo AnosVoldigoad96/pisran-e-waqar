@@ -76,33 +76,46 @@ export async function FlightItineraries() {
     };
 
     return (
-        <section className="w-full py-12 sm:py-16">
-            {/* This outer div handles the padding and centering */}
-            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        <section className="w-full py-12 sm:py-16 bg-gradient-to-b from-background via-background to-muted/30 relative overflow-hidden">
+            {/* Decorative gradient circles */}
+            <div className="absolute top-20 right-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+            
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 relative z-10">
                 <div className="mx-auto max-w-2xl text-center">
+                    <div className="inline-block px-4 py-2 bg-secondary/10 rounded-full mb-4">
+                        <span className="text-sm font-semibold text-secondary">Flight Itineraries</span>
+                    </div>
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                         Flight Itineraries
                     </h2>
-                    <p className="mt-2 text-lg leading-8 text-muted-foreground">
+                    <p className="mt-4 text-lg leading-8 text-muted-foreground">
                         We partner with world-class airlines to ensure your comfort and safety.
                     </p>
                 </div>
-                <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-3">
-                        {itineraries.map((itinerary) => (
-                            <div key={itinerary.id} className="flex flex-col gap-4 cursor-pointer rounded-lg border bg-card p-4 text-card-foreground shadow-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-1 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {itineraries.map((itinerary, index) => (
+                            <div 
+                                key={itinerary.id} 
+                                className="group flex flex-col gap-4 cursor-pointer rounded-xl border-2 border-border bg-card p-4 sm:p-6 text-card-foreground shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/20 hover:-translate-y-2 hover:border-secondary/50 sm:flex-row sm:items-center sm:justify-between relative overflow-hidden"
+                                style={{ animationDelay: `${index * 50}ms` }}
+                            >
+                                {/* Gradient overlay on hover */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-secondary/0 via-transparent to-accent/0 group-hover:from-secondary/5 group-hover:via-secondary/5 group-hover:to-accent/5 transition-all duration-500 rounded-xl" />
                                 {/* Left Side: Airline Info */}
-                                <div className="flex flex-shrink-0 items-center gap-4">
+                                <div className="flex flex-shrink-0 items-center gap-4 relative z-10">
                                     {itinerary.airlines?.logo_url && (
-                                        <Image src={itinerary.airlines.logo_url} alt={itinerary.airlines.name} width={40} height={40} className="h-10 w-10 rounded-full" />
+                                        <div className="relative h-12 w-12 rounded-full overflow-hidden ring-2 ring-secondary/20 group-hover:ring-secondary/50 transition-all duration-300 group-hover:scale-110">
+                                            <Image src={itinerary.airlines.logo_url} alt={itinerary.airlines.name} width={48} height={48} className="h-full w-full object-cover" />
+                                        </div>
                                     )}
                                     <div>
-                                        <p className="font-bold">{itinerary.airlines?.name}</p>
-                                        <p className="text-sm text-muted-foreground">{itinerary.itinerary_name}</p>
+                                        <p className="font-bold group-hover:text-secondary transition-colors duration-300">{itinerary.airlines?.name}</p>
+                                        <p className="text-sm text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">{itinerary.itinerary_name}</p>
                                     </div>
                                 </div>
 
                                 {/* Right Side: Dates & Details */}
-                                <div className="text-center text-sm sm:text-right">
+                                <div className="text-center text-sm sm:text-right relative z-10">
                                     <p className="flex items-center justify-center gap-2 font-medium sm:justify-end"><PlaneTakeoff className="h-4 w-4 text-muted-foreground" /> {formatElegantDate(itinerary.departure_date)}</p>
                                     <p className="flex items-center justify-center gap-2 font-medium sm:justify-end"><PlaneLanding className="h-4 w-4 text-muted-foreground" /> {formatElegantDate(itinerary.return_date)}</p>
                                     {Array.isArray(itinerary.flight_details) && (

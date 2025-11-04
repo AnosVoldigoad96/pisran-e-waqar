@@ -25,9 +25,16 @@ const services = [
 
 export function ServicesSection() {
     return (
-        <section className="w-full pt-8 sm:pt-12 pb-8 sm:pb-12 bg-[#fff6f6]">
-            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        <section className="w-full pt-8 sm:pt-12 pb-8 sm:pb-12 bg-gradient-to-b from-background via-background to-muted/30 relative overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+            
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 relative z-10">
                 <div className="mx-auto max-w-2xl text-center">
+                    <div className="inline-block px-4 py-2 bg-secondary/10 rounded-full mb-4">
+                        <span className="text-sm font-semibold text-secondary">Our Services</span>
+                    </div>
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                         Comprehensive Travel Services
                     </h2>
@@ -36,15 +43,27 @@ export function ServicesSection() {
                     </p>
                 </div>
                 <div className="mx-auto mt-16 grid max-w-none grid-cols-1 gap-8 text-center sm:grid-cols-2 lg:grid-cols-3">
-                    {services.map((service) => (
-                        <Link key={service.title} href={service.link} className="block rounded-lg border bg-card p-8 text-card-foreground shadow-sm transition-all duration-300 hover:shadow-primary/20 hover:shadow-xl hover:-translate-y-1">
-                            <div className="flex items-center justify-center h-16 w-16 mx-auto bg-secondary/10 rounded-full">
-                                {service.icon}
+                    {services.map((service, index) => (
+                        <Link 
+                            key={service.title} 
+                            href={service.link} 
+                            className="group block rounded-xl border-2 border-border bg-card p-8 text-card-foreground shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-secondary/20 hover:-translate-y-2 hover:border-secondary/50 relative overflow-hidden"
+                            style={{ animationDelay: `${index * 100}ms` }}
+                        >
+                            {/* Gradient overlay on hover */}
+                            <div className="absolute inset-0 bg-gradient-to-br from-secondary/0 via-secondary/0 to-secondary/0 group-hover:from-secondary/5 group-hover:via-accent/5 group-hover:to-secondary/5 transition-all duration-500 rounded-xl" />
+                            
+                            <div className="relative z-10">
+                                <div className="flex items-center justify-center h-20 w-20 mx-auto bg-gradient-to-br from-secondary/20 to-accent/20 rounded-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
+                                    <div className="group-hover:scale-110 transition-transform duration-500">
+                                        {service.icon}
+                                    </div>
+                                </div>
+                                <h3 className="mt-6 text-lg font-semibold leading-6 text-foreground group-hover:text-secondary transition-colors duration-300">
+                                    {service.title}
+                                </h3>
+                                <p className="mt-2 text-base text-muted-foreground group-hover:text-foreground/80 transition-colors duration-300">{service.description}</p>
                             </div>
-                            <h3 className="mt-6 text-lg font-semibold leading-6 text-foreground">
-                                {service.title}
-                            </h3>
-                            <p className="mt-2 text-base text-muted-foreground">{service.description}</p>
                         </Link>
                     ))}
                 </div>

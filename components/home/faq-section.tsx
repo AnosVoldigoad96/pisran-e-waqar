@@ -19,10 +19,16 @@ export function FaqSection({ faqs }: { faqs: Faq[] }) {
     }
 
     return (
-        <section className="w-full pt-8 sm:pt-12 pb-8 sm:pb-12 bg-[#fff6f6]">
-            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        <section className="w-full pt-8 sm:pt-12 pb-8 sm:pb-12 bg-gradient-to-b from-background via-background to-muted/30 relative overflow-hidden">
+            {/* Decorative elements */}
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+            
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
                     <div className="lg:col-span-1">
+                        <div className="inline-block px-4 py-2 bg-secondary/10 rounded-full mb-4">
+                            <span className="text-sm font-semibold text-secondary">FAQs</span>
+                        </div>
                         <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                             Frequently Asked Questions
                         </h2>

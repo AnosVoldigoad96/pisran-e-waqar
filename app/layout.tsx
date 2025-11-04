@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { supabase } from "@/lib/supabase";
@@ -6,13 +6,20 @@ import { Header } from "@/components/header";
 import { Toaster } from "sonner";
 import { Footer } from "@/components/footer";
 import RecaptchaProvider from "./components/recaptcha-provider";
+import { ThemeProvider } from "@/components/theme-provider";
+import { FloatingWhatsAppButton } from "@/components/floating-whatsapp-button";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Pisran-e-Waqar",
   description: "Your trusted partner for Umrah journeys.",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=5.0",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 // This function fetches the site settings from Supabase
@@ -41,18 +48,26 @@ export default async function RootLayout({
   const settings = await getSiteSettings();
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       {/* The body will have the background color for the sides */}
       <body className={`${inter.className} bg-background`}>
-        <RecaptchaProvider>
-          {/* This container div centers everything inside it */}
-          <div className="relative flex min-h-screen flex-col w-full overflow-x-hidden">
-            <Header settings={settings} />
-            <main className="flex-1 w-full">{children}</main>
-            <Footer settings={settings} />
-            <Toaster />
-          </div>
-        </RecaptchaProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <RecaptchaProvider>
+            {/* This container div centers everything inside it */}
+            <div className="relative flex min-h-screen flex-col w-full overflow-x-hidden">
+              <Header settings={settings} />
+              <main className="flex-1 w-full">{children}</main>
+              <Footer settings={settings} />
+              <FloatingWhatsAppButton whatsappNo={settings?.whatsapp_no || null} />
+              <Toaster />
+            </div>
+          </RecaptchaProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

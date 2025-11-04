@@ -19,7 +19,12 @@ function SubmitButton({ isPending }: { isPending: boolean }) {
     const { pending } = useFormStatus();
     const disabled = pending || isPending;
     return (
-        <Button type="submit" disabled={disabled} size="lg" className="px-12 text-base font-semibold rounded-md shadow-md bg-primary text-primary-foreground transition-all duration-300 ease-in-out hover:bg-primary/90 hover:shadow-lg hover:-translate-y-1">
+        <Button 
+            type="submit" 
+            disabled={disabled} 
+            size="lg" 
+            className="px-12 text-base font-semibold rounded-md shadow-lg bg-gradient-to-r from-secondary to-accent hover:from-secondary/90 hover:to-accent/90 text-white transition-all duration-300 hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        >
             {disabled ? "Sending..." : "Send Message"}
         </Button>
     );
@@ -62,10 +67,13 @@ export function ContactForm() {
     };
 
     return (
-        <div className="bg-background p-8 rounded-xl shadow-lg">
+        <div className="bg-card border-2 border-border p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
             <div className="text-center mb-8">
+                <div className="inline-block px-4 py-2 bg-secondary/10 rounded-full mb-4">
+                    <span className="text-sm font-semibold text-secondary">Contact Form</span>
+                </div>
                 <h2 className="text-3xl font-bold tracking-tight text-foreground">Send Us a Message</h2>
-                <p className="mt-2 text-lg text-muted-foreground">
+                <p className="mt-4 text-lg text-muted-foreground">
                     Have a question or need to book a trip? Fill out the form below.
                 </p>
             </div>

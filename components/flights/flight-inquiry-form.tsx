@@ -21,7 +21,12 @@ function SubmitButton({ isPending }: { isPending: boolean }) {
     const { pending } = useFormStatus();
     const disabled = pending || isPending;
     return (
-        <Button type="submit" size="lg" disabled={disabled} className="w-full sm:w-auto shadow-lg bg-gradient-to-r from-primary to-primary/80 text-white transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer">
+        <Button 
+            type="submit" 
+            size="lg" 
+            disabled={disabled} 
+            className="w-full sm:w-auto shadow-lg bg-gradient-to-r from-secondary to-accent hover:from-secondary/90 hover:to-accent/90 text-white transition-all duration-300 hover:shadow-xl hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+        >
             <Send className="mr-2 h-5 w-5" />
             {disabled ? "Submitting..." : "Submit Inquiry"}
         </Button>
@@ -75,16 +80,23 @@ export function FlightInquiryForm() {
                 style={{ objectFit: 'cover' }}
                 className="z-0 animate-zoom-pan"
             />
-            <div className="absolute inset-0 bg-black/50 z-10" />
-            <div className="absolute inset-0 bg-secondary/30 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/60 z-10" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0C2B4E]/30 via-transparent to-[#0C2B4E]/30 z-10" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(12,43,78,0.3)_100%)] z-10" />
 
             <div className="relative z-20 container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 py-16 sm:py-24 text-center">
-                <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Find Your Perfect Flight</h1>
-                <p className="mt-4 text-lg max-w-2xl mx-auto text-white/80">
+                <div className="inline-block px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full mb-4">
+                    <span className="text-sm font-semibold text-white">Flight Inquiry</span>
+                </div>
+                <h1 className="text-3xl font-bold tracking-tight sm:text-4xl drop-shadow-lg">Find Your Perfect Flight</h1>
+                <div className="w-24 h-1 bg-gradient-to-r from-transparent via-accent to-transparent mx-auto mt-4 mb-6" />
+                <p className="mt-4 text-lg max-w-2xl mx-auto text-white/90">
                     Enter your travel details below and let our experts find the best deals for you.
                 </p>
 
-                <form ref={formRef} action={handleFormSubmit} className="mt-10 max-w-4xl mx-auto text-left space-y-6">
+                <div className="mt-10 max-w-4xl mx-auto">
+                    <div className="rounded-2xl border-2 border-white/20 bg-white/10 backdrop-blur-md p-6 sm:p-8 shadow-2xl">
+                        <form ref={formRef} action={handleFormSubmit} className="text-left space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div className="space-y-2">
                             <Label htmlFor="departure-city" className="text-white/90">Departure City</Label>
@@ -134,10 +146,12 @@ export function FlightInquiryForm() {
                         </div>
                     </div>
 
-                    <div className="text-center pt-4">
-                        <SubmitButton isPending={isPending} />
+                        <div className="text-center pt-4">
+                            <SubmitButton isPending={isPending} />
+                        </div>
+                    </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     );

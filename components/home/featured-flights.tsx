@@ -41,9 +41,16 @@ export function FeaturedFlights({ flights, contactInfo }: { flights: Flight[], c
     }
 
     return (
-        <section className="w-full pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background">
-            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
+        <section className="w-full pt-8 sm:pt-12 pb-8 sm:pb-12 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+            {/* Decorative gradient circles */}
+            <div className="absolute top-20 right-0 w-64 h-64 bg-secondary/10 rounded-full blur-3xl" />
+            <div className="absolute bottom-20 left-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl" />
+            
+            <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 relative z-10">
                 <div className="mx-auto max-w-2xl text-center">
+                    <div className="inline-block px-4 py-2 bg-gradient-to-r from-secondary/10 to-accent/10 rounded-full mb-4">
+                        <span className="text-sm font-semibold bg-gradient-to-r from-secondary to-accent bg-clip-text text-transparent">Flight Deals</span>
+                    </div>
                     <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
                         Featured Flight Deals
                     </h2>
