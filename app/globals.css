@@ -80,19 +80,19 @@
 
 .dark {
   --background: oklch(0.25 0.08 250); /* #0C2B4E - Dark blue background */
-  --foreground: oklch(0.96 0 0); /* #F4F4F4 - Light gray text */
+  --foreground: oklch(0.98 0 0); /* #F4F4F4 - Light gray text (brighter for better contrast) */
   --card: oklch(0.30 0.08 250); /* #1A3D64 - Medium dark blue cards */
-  --card-foreground: oklch(0.96 0 0); /* #F4F4F4 - Light gray text */
+  --card-foreground: oklch(0.98 0 0); /* #F4F4F4 - Light gray text */
   --popover: oklch(0.30 0.08 250); /* #1A3D64 - Medium dark blue */
-  --popover-foreground: oklch(0.96 0 0); /* #F4F4F4 - Light gray text */
-  --primary: oklch(0.96 0 0); /* #F4F4F4 - Light gray primary */
+  --popover-foreground: oklch(0.98 0 0); /* #F4F4F4 - Light gray text */
+  --primary: oklch(0.98 0 0); /* #F4F4F4 - Light gray primary */
   --primary-foreground: oklch(0.25 0.08 250); /* #0C2B4E - Dark blue on primary */
   --secondary: oklch(0.38 0.06 220); /* #1D546C - Lighter blue secondary */
-  --secondary-foreground: oklch(0.96 0 0); /* #F4F4F4 - Light gray text */
+  --secondary-foreground: oklch(0.98 0 0); /* #F4F4F4 - Light gray text */
   --muted: oklch(0.32 0.07 240); /* Slightly lighter than card */
-  --muted-foreground: oklch(0.75 0 0); /* Medium gray muted text */
+  --muted-foreground: oklch(0.85 0 0); /* Lighter gray muted text for better readability */
   --accent: oklch(0.38 0.06 220); /* #1D546C - Lighter blue accent */
-  --accent-foreground: oklch(0.96 0 0); /* #F4F4F4 - Light gray text */
+  --accent-foreground: oklch(0.98 0 0); /* #F4F4F4 - Light gray text */
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(0.38 0.06 220); /* #1D546C - Lighter blue borders */
   --input: oklch(0.32 0.07 240); /* Slightly lighter input background */
@@ -103,11 +103,11 @@
   --chart-4: oklch(0.627 0.265 303.9);
   --chart-5: oklch(0.645 0.246 16.439);
   --sidebar: oklch(0.25 0.08 250); /* #0C2B4E - Dark blue sidebar */
-  --sidebar-foreground: oklch(0.96 0 0); /* #F4F4F4 - Light gray text */
+  --sidebar-foreground: oklch(0.98 0 0); /* #F4F4F4 - Light gray text */
   --sidebar-primary: oklch(0.38 0.06 220); /* #1D546C - Lighter blue */
-  --sidebar-primary-foreground: oklch(0.96 0 0); /* #F4F4F4 - Light gray text */
+  --sidebar-primary-foreground: oklch(0.98 0 0); /* #F4F4F4 - Light gray text */
   --sidebar-accent: oklch(0.30 0.08 250); /* #1A3D64 - Medium dark blue */
-  --sidebar-accent-foreground: oklch(0.96 0 0); /* #F4F4F4 - Light gray text */
+  --sidebar-accent-foreground: oklch(0.98 0 0); /* #F4F4F4 - Light gray text */
   --sidebar-border: oklch(0.38 0.06 220); /* #1D546C - Lighter blue border */
   --sidebar-ring: oklch(0.38 0.06 220); /* #1D546C - Lighter blue ring */
 }
@@ -146,6 +146,66 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Ensure text is visible in dark mode */
+  .dark {
+    color: var(--foreground);
+  }
+  .dark p,
+  .dark h1,
+  .dark h2,
+  .dark h3,
+  .dark h4,
+  .dark h5,
+  .dark h6,
+  .dark span,
+  .dark div {
+    color: inherit;
+  }
+  
+  /* Badge visibility in dark mode - improve contrast */
+  /* Target all badge containers with rounded-full */
+  .dark .inline-block.rounded-full,
+  .dark .inline-flex.rounded-full {
+    background-color: oklch(0.50 0.08 200 / 0.3) !important;
+  }
+  
+  /* Badge text colors - all secondary text in badges */
+  .dark .rounded-full span.text-secondary,
+  .dark .rounded-full .text-secondary {
+    color: oklch(0.82 0.08 200) !important;
+  }
+  
+  /* Gradient text badges */
+  .dark .rounded-full span.bg-clip-text {
+    background: linear-gradient(to right, oklch(0.82 0.08 200), oklch(0.85 0.10 200)) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    color: transparent !important;
+  }
+  
+  /* Hardcoded badge colors for trusted section - using attribute selector */
+  .dark .rounded-full [class*="text-[#0C2B4E]"],
+  .dark .rounded-full svg[class*="text-[#0C2B4E]"] {
+    color: oklch(0.82 0.08 200) !important;
+    fill: oklch(0.82 0.08 200) !important;
+  }
+  
+  /* Heading hover effects in dark mode - brighter colors */
+  .dark .group:hover h3.group-hover\:text-secondary,
+  .dark .group:hover p.group-hover\:text-secondary,
+  .dark .group:hover .group-hover\:text-secondary,
+  .dark .group:hover .font-bold.group-hover\:text-secondary,
+  .dark .group:hover p.font-bold.group-hover\:text-secondary {
+    color: oklch(0.88 0.10 200) !important;
+  }
+  
+  /* Accent hover effects in dark mode */
+  .dark .group:hover .group-hover\:text-accent,
+  .dark .group:hover svg.group-hover\:text-accent {
+    color: oklch(0.90 0.12 110) !important;
+    fill: oklch(0.90 0.12 110) !important;
   }
 }
 
