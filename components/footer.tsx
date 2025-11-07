@@ -81,17 +81,28 @@ export function Footer({ settings }: FooterProps) {
                 <div className="grid grid-cols-1 gap-8 border-t border-[#F4F4F4]/20 py-12 md:grid-cols-4">
                     {/* Column 1: Company Info */}
                     <div className="group">
-                        <Link href="/" className="flex items-start mb-4 transition-transform duration-300 hover:scale-105 inline-block">
-                            {settings?.site_logo_url ? (
-                                <Image
-                                    src={settings.site_logo_url}
-                                    alt={settings.brand_name || "Pisran-e-Waqar"}
-                                    width={250}
-                                    height={100}
-                                    className="object-contain"
-                                    style={{ height: "auto", width: "auto" }}
-                                />
-                            ) : <h3 className="font-bold text-lg group-hover:text-accent transition-colors duration-300">{settings?.brand_name || "Pisran-e-Waqar"}</h3>}
+                        <Link href="/" className="flex items-center gap-3 mb-4 transition-transform duration-300 hover:scale-105 inline-flex">
+                            {settings?.site_logo_url && (
+                                <div className="relative flex-shrink-0">
+                                    <Image
+                                        src={settings.site_logo_url}
+                                        alt={settings.brand_name || "Pisran-e-Waqar"}
+                                        width={60}
+                                        height={60}
+                                        className="h-12 w-12 object-contain transition-all duration-300 sm:h-14 sm:w-14 md:h-16 md:w-16 group-hover:brightness-110"
+                                        style={{ height: "auto" }}
+                                        sizes="(max-width: 640px) 48px, (max-width: 768px) 56px, 64px"
+                                    />
+                                </div>
+                            )}
+                            <div className="flex flex-col">
+                                <h3 className="font-bold text-lg sm:text-xl md:text-2xl text-[#F4F4F4] group-hover:text-accent transition-colors duration-300 leading-tight">
+                                    {settings?.brand_name || "Pisran-e-Waqar"}
+                                </h3>
+                                <span className="text-xs sm:text-sm text-[#F4F4F4]/70 font-medium leading-tight">
+                                    Travels & Tours Pvt. (Ltd.)
+                                </span>
+                            </div>
                         </Link>
                         <p className="text-sm italic text-[#F4F4F4]/70 mt-1">Your trusted partner for Umrah.</p>
                         <p className="text-sm text-[#F4F4F4]/80 mt-4 leading-relaxed">Dedicated to providing memorable and sacred journeys. We handle every detail of your pilgrimage with care, ensuring a seamless and spiritually fulfilling experience.</p>

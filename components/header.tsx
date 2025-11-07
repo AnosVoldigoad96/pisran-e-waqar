@@ -44,20 +44,28 @@ export function Header({ settings }: HeaderProps) {
             <div className="container relative mx-auto flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20">
                 {/* Left side: Logo and Brand Name */}
                 <div className="flex-shrink-0">
-                    <Link href="/" className="group flex items-center transition-transform duration-300 hover:scale-105">
-                        {settings?.site_logo_url ? (
-                            <Image
-                                src={settings.site_logo_url}
-                                alt={settings.brand_name || "Pisran-e-Waqar"}
-                                width={250}
-                                height={100}
-                                className="h-auto w-[120px] object-contain transition-all duration-300 sm:w-[180px] md:w-[220px] lg:w-[250px] group-hover:brightness-110"
-                                style={{ height: "auto" }}
-                                sizes="(max-width: 640px) 120px, (max-width: 768px) 180px, (max-width: 1024px) 220px, 250px"
-                            />
-                        ) : (
-                            <span className="text-lg font-bold transition-colors duration-300 sm:text-xl md:text-2xl group-hover:text-accent">{settings?.brand_name || "Pisran-e-Waqar"}</span>
+                    <Link href="/" className="group flex items-center gap-2 sm:gap-3 transition-transform duration-300 hover:scale-105">
+                        {settings?.site_logo_url && (
+                            <div className="relative flex-shrink-0">
+                                <Image
+                                    src={settings.site_logo_url}
+                                    alt={settings.brand_name || "Pisran-e-Waqar"}
+                                    width={60}
+                                    height={60}
+                                    className="h-10 w-10 object-contain transition-all duration-300 sm:h-12 sm:w-12 md:h-14 md:w-14 group-hover:brightness-110"
+                                    style={{ height: "auto" }}
+                                    sizes="(max-width: 640px) 40px, (max-width: 768px) 48px, 56px"
+                                />
+                            </div>
                         )}
+                        <div className="flex flex-col">
+                            <span className="text-base font-bold text-[#F4F4F4] transition-colors duration-300 sm:text-lg md:text-xl lg:text-2xl group-hover:text-accent whitespace-nowrap leading-tight">
+                                {settings?.brand_name || "Pisran-e-Waqar"}
+                            </span>
+                            <span className="text-[10px] sm:text-xs text-[#F4F4F4]/70 font-medium leading-tight whitespace-nowrap">
+                                Travels & Tours Pvt. (Ltd.)
+                            </span>
+                        </div>
                     </Link>
                 </div>
 
