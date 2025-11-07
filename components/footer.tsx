@@ -95,7 +95,7 @@ export function Footer({ settings }: FooterProps) {
                                     />
                                 </div>
                             )}
-                            <div className="flex flex-col">
+                            <div className="hidden sm:flex flex-col">
                                 <h3 className="font-bold text-lg sm:text-xl md:text-2xl text-[#F4F4F4] group-hover:text-accent transition-colors duration-300 leading-tight">
                                     {settings?.brand_name || "Pisran-e-Waqar"}
                                 </h3>

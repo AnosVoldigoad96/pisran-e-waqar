@@ -58,7 +58,7 @@ export function Header({ settings }: HeaderProps) {
                                 />
                             </div>
                         )}
-                        <div className="flex flex-col">
+                        <div className="hidden sm:flex flex-col">
                             <span className="text-base font-bold text-[#F4F4F4] transition-colors duration-300 sm:text-lg md:text-xl lg:text-2xl group-hover:text-accent whitespace-nowrap leading-tight">
                                 {settings?.brand_name || "Pisran-e-Waqar"}
                             </span>
